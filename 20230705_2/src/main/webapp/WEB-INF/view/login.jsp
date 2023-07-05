@@ -10,7 +10,7 @@
 	<h1>연습용입니다.</h1>
 	<h1>로그인</h1>
 	<div>
-		<form action="<%=request.getContextPath() %>/login" method="post">
+		<form action="#" method="post">
 			<table>
 				<tr>
 					<th>아이디</th>
