@@ -1,4 +1,4 @@
-package kh.lclass.test1.controller;
+package kh.lclass.test3.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class JoinController
  */
-@WebServlet("/join")
+@WebServlet("/join3")
 public class JoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,7 +26,7 @@ public class JoinController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println("여기 get 들어왔음!!!");
+		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/WEB-INF/view/join.jsp").forward(request, response);
 	}
 
@@ -34,27 +34,19 @@ public class JoinController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("여기 post 들어왔음!!!");
-		String id = request.getParameter("mid");
-		String pwd = request.getParameter("mpwd");
-		System.out.println("id : "+id);
-		System.out.println("pwd : "+pwd);
-		//DB에 저장	//TODO
-		int result = 1;//0이면 저장 실패, 1이면 저장 성공.
+		// TODO Auto-generated method stub
+		System.out.println("/join Post");
+		//데이터 전달 받기
+		String id =request.getParameter("mid");
+		String pass = request.getParameter("mpass");
+		String nickname = request.getParameter("mnickname");
+		//전달받은 데이터 DB 저장//TODO
 		
-		if(result>0) {
-		//DB에 잘 저장했다면
-		//	1- 로그인 화면으로 이동
-		//	2- 메인 화면으로 이동
-			//.jsp 열어주는 것이 아님. url을 /login으로 이동함.
-//			response.sendRedirect("/login");	// 오류
-			response.sendRedirect(request.getContextPath()+"/login");	
-		}else {
+		//성공시 로그인 페이지 url이동
+		response.sendRedirect(request.getContextPath()+"/login3");
+		//실패 TODO
+		//경고창 후 /join으로 이동
 		
-		//DB에 저장하지 못했다면
-		//	경고창 띄우고 회원가입 화면으로 이동
-		//	경고창 띄우고 메인 화면으로 이동
-		}
 	}
 
 }
