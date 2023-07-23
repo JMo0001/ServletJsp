@@ -27,8 +27,7 @@ public class StudentDao {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			//2. Connection 객체 생성
-			conn = 
-			DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "kh", "kh");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "kh", "kh");
 			if(conn !=null) {	//확인용도. 필요 없다.
 				System.out.println("DB 연결 성공!!!");
 			}else {
