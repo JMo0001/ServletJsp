@@ -20,8 +20,9 @@ public class StudentDao {
 		
 		StudentVo result = null;
 		String query = "select * from tb_student "
-				+ "join tb_department using(department_no)"
-				+ "where student_no = "+"'"+studentNo+"'";
+				+ "join tb_department using(department_no) "
+//				+ "where student_no = "+"'"+studentNo+"'";	//stmt용.
+				+ "where student_no = ?";	// ? : 위치 홀더
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -37,6 +38,9 @@ public class StudentDao {
 //				System.out.println("연결 성공");
 //			}
 			pstmt = conn.prepareStatement(query);
+			//	pstmt 생성되고 execute 실행하기 전.
+			//	여기서 ? 위치폴더에 값 넣기.
+			pstmt.setString(0, studentNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {	//query 단일행이므로 while문 필요없음.
 				result = new StudentVo();

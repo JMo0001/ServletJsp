@@ -60,20 +60,6 @@ public class DepartmentDao {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public List<DepartmentVo> selectDepartmentList() {
 		List<DepartmentVo> result = null;
 

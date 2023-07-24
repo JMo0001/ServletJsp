@@ -20,7 +20,6 @@
 			<th>개설 여부</th>
 			<th>정원</th>
 		</tr>
-		
 		<tr>
 			<td><%=vo.getDepartmentNo() %></td>
 			<td><%=vo.getDepartmentName() %></td>

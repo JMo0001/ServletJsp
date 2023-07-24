@@ -1,26 +1,28 @@
-package kh.test.jdbckh.student.controller;
+package kh.test.jdbckh.professor.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kh.test.jdbckh.student.model.dao.StudentDao;
-import kh.test.jdbckh.student.model.vo.StudentVo;
+import kh.test.jdbckh.professor.model.dao.ProfessorDao;
+import kh.test.jdbckh.professor.model.vo.ProfessorVo;
 
 /**
- * Servlet implementation class StudentGetController
+ * Servlet implementation class ProfessorListController
  */
-@WebServlet("/student/get")
-public class StudentGetController extends HttpServlet {
+@WebServlet("/professor/list")
+public class ProfessorListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StudentGetController() {
+    public ProfessorListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,16 +31,11 @@ public class StudentGetController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 전달받은 parameter 읽어내기
-		String studentNo = request.getParameter("sno");
-		System.out.println(studentNo);
-		//2. 전달받은 데이터를 활용해 DB학생 상세 정보 가저오기
-		StudentDao dao = new StudentDao();
-		StudentVo vo = dao.selectOneStudent(studentNo);
-		//3. DB로부터 전달받은 데이터를 JSP에 전달함.
-		request.setAttribute("oneVo", vo);
-		//4. JSP 파일 forward로 열기
-		request.getRequestDispatcher("/WEB-INF/view/student/get.jsp").forward(request, response);
+		ProfessorDao dao = new ProfessorDao();
+		List<ProfessorVo> result = dao.selectProfessorList(); 
+		request.setAttribute("professorList", result);
+		
+		request.getRequestDispatcher("/WEB-INF/view/professor/list.jsp").forward(request, response);
 	}
 
 	/**
