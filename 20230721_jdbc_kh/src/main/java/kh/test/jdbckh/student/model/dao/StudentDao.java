@@ -40,7 +40,7 @@ public class StudentDao {
 			pstmt = conn.prepareStatement(query);
 			//	pstmt 생성되고 execute 실행하기 전.
 			//	여기서 ? 위치폴더에 값 넣기.
-			pstmt.setString(0, studentNo);
+			pstmt.setString(1, studentNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {	//query 단일행이므로 while문 필요없음.
 				result = new StudentVo();
