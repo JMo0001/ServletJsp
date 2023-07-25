@@ -14,14 +14,16 @@ public class TbClassDao {
 	
 	
 	public TbClassVo selectOneClass(String classNo) {
+		System.out.println(classNo);
 		TbClassVo result = null;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String qeury = "select class_no, department_no, preattending_class_no, class_name, "
-				+ "class_type from tb_class where class_no = ?";
+		String qeury = "select c1.class_no, c1.department_no, c1.preattending_class_no, c1.class_name, "
+				+ " c1.class_type , c2.class_name c2_class_name from tb_class c1 "
+				+ " left join tb_class c2 on (c1.preattending_class_no = c2.class_no) "
+				+ " where c1.class_no = ?";
 		
 		
 		
@@ -38,6 +40,7 @@ public class TbClassDao {
 				result.setPreattendingClassNo(rs.getString("preattending_class_no"));
 				result.setClassName(rs.getString("class_name"));
 				result.setClasstype(rs.getString("class_type"));
+				result.setClassname2(rs.getString("c2_class_name"));
 			}
 			
 			
@@ -48,7 +51,7 @@ public class TbClassDao {
 		}
 		
 		
-		
+		System.out.println(result);
 		
 		return result;
 	}

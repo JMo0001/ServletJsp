@@ -34,7 +34,7 @@ public class TbClassGetController extends HttpServlet {
 		TbClassDao dao = new TbClassDao();
 		TbClassVo vo = dao.selectOneClass(classNo);
 		request.setAttribute("oneVo", vo);
-		
+
 		request.getRequestDispatcher("/WEB-INF/view/class/get.jsp").forward(request, response);
 	}
 

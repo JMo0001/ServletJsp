@@ -15,10 +15,13 @@ public class TbClassVo {
 	private String preattendingClassNo;
 	private String className;
 	private String classtype;
+	private String classname2;
+	
 	@Override
 	public String toString() {
 		return "TbClassVo [classNo=" + classNo + ", departmentNo=" + departmentNo + ", preattendingClassNo="
-				+ preattendingClassNo + ", className=" + className + ", classtype=" + classtype + "]";
+				+ preattendingClassNo + ", className=" + className + ", classtype=" + classtype + ", classname2="
+				+ classname2 + "]";
 	}
 	public String getClassNo() {
 		return classNo;
@@ -49,6 +52,12 @@ public class TbClassVo {
 	}
 	public void setClasstype(String classtype) {
 		this.classtype = classtype;
+	}
+	public String getClassname2() {
+		return classname2;
+	}
+	public void setClassname2(String classname2) {
+		this.classname2 = classname2;
 	}
 	
 	
