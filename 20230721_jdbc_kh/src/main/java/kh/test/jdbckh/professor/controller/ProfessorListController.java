@@ -32,8 +32,31 @@ public class ProfessorListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProfessorDao dao = new ProfessorDao();
-		List<ProfessorVo> result = dao.selectProfessorList(); 
+		List<ProfessorVo> result = null;
+		String searchWord = request.getParameter("searchWord");
+		
+		String pageNoStr = request.getParameter("pageNo");
+		int currentPage = 1;
+		if(pageNoStr != null) {
+			try {
+			currentPage = Integer.parseInt(pageNoStr);
+			} catch ( NumberFormatException e){
+				e.printStackTrace();
+			}
+		}
+		
+		
+		if(searchWord!=null) {
+			result = dao.selectProfessorList(searchWord);
+		}else {
+//			result = dao.selectProfessorList();	//	전체선택
+			result = dao.selectProfessorList(1, 10);
+		}
+		
 		request.setAttribute("professorList", result);
+		if(searchWord!=null) {
+			request.setAttribute("searchWord", searchWord);
+		}
 		
 		request.getRequestDispatcher("/WEB-INF/view/professor/list.jsp").forward(request, response);
 	}
