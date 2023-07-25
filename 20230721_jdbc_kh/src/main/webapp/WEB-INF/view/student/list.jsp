@@ -66,12 +66,22 @@
 		</tr>
 
 		<%
-		}
+		}	//for
 		%>
 
 	</table>
+	<div>
 	<%
-	}
+	for(int i=1; i<=10;i++){
+		
+	%>
+		<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=i %>"><span><%=i %></span></a>
+	<%
+	}	//for
+	%>
+	</div>
+	<%
+	}	//else
 	%>
 </body>
 </html>

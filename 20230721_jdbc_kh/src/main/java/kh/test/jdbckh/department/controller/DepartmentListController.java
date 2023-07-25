@@ -33,12 +33,24 @@ public class DepartmentListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<DepartmentVo> result = null;
 		DepartmentDao dao = new DepartmentDao();
-		String search = request.getParameter("search");
+		String search = request.getParameter("search");	//검색
+		
+		String pageNoStr = request.getParameter("pageNo");
+		int currentPage = 1;
+		if(pageNoStr != null) {
+			try {
+				currentPage = Integer.parseInt(pageNoStr);	// NumberFormatException
+			} catch( NumberFormatException e){
+				e.printStackTrace();
+			}
+		}
+		
 		
 		if(search != null ) {
 			result = dao.selectDepartmentList(search);
 		}else {
-			result = dao.selectDepartmentList();
+//			result = dao.selectDepartmentList();	//전체
+			result = dao.selectDepartmentList(1, 10);
 		}
 		
 		

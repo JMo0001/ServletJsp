@@ -27,9 +27,37 @@
 		
 		<h3><%=search %>검색 결과</h3>
 		<h3><a href = "<%=request.getContextPath() %>/department/list">전체 보기</a></h3>
+		<table border = "1">
+			<tr>
+		
+		<%
+		for(int i=0; i<volist.size();i++){
+			DepartmentVo vo = volist.get(i);
+		%>
+				<th>학과 번호</th>
+				<th>학과 이름</th>
+				<th>계열</th>
+				<th>개설 여부</th>
+				<th>정원</th>
+			</tr>
+		
+			<tr>
+				<td><a href="<%=request.getContextPath() %>/department/get?dno=<%=vo.getDepartmentNo() %>"><%=vo.getDepartmentNo() %></a></td>
+				<td><%=vo.getDepartmentName() %></td>
+				<td><%=vo.getCategory() %></td>
+				<td><%=vo.getOpenYn() %></td>
+				<td><%=vo.getCapacity() %></td>
+			</tr>
+		<%
+		}	//	search - for
+		%>
+		
+	</table>
+	
+	
 	
 	<%
-	}
+	} else{
 	if(volist == null || volist.size()==0){
 		%>
 		<h2>결과물이 없습니다.</h2>
@@ -53,12 +81,25 @@
 			<td><%=vo.getDepartmentName() %></td>
 		</tr>
 		<%
-		}
+		}	//	result(기본화면) - for
 		%>
 		
 	</table>
 	<% 
-	}
+	}	//	null result - else
+	%>
+	
+	<div>
+	<% 
+		for(int i=1; i<=10; i++){
+	%>
+		<a href="<%=request.getContextPath() %>/department/list?pageNo=<%=i %>"><span><%=i %></span></a>
+	</div>
+	<%
+		}	//	paging - for
+	%>
+	<%
+	}	//	search - else
 	%>
 </body>
 </html>
