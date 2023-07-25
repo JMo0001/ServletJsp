@@ -108,5 +108,59 @@ public class DepartmentDao {
 		
 		return result;
 	}
+	//검색용
+	public List<DepartmentVo> selectDepartmentList(String search) {
+		List<DepartmentVo> result = null;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select * from tb_department "
+				+ "	where department_name like ? or category like ?";
+		
+		
+			try {
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE","kh","kh");
+				pstmt = conn.prepareStatement(query);
+				search = "%"+search+"%";
+				pstmt.setString(1, search);
+				pstmt.setString(2, search);
+				
+				rs=pstmt.executeQuery();
+				
+				result = new ArrayList<DepartmentVo>();
+				while (rs.next()==true) {
+					DepartmentVo vo = new DepartmentVo();
+					vo.setDepartmentNo(rs.getString("department_no"));
+					vo.setDepartmentName(rs.getString("department_name"));
+					vo.setCategory(rs.getString("category"));
+					vo.setOpenYn(rs.getString("open_yn"));
+					vo.setCapacity(rs.getInt("capacity"));
+					
+					result.add(vo);
+				}
+				
+				
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		System.out.println("=================================");
+		System.out.println(result);
+		
+		
+		
+		return result;
+	}
 
 }

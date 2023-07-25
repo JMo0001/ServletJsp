@@ -31,11 +31,22 @@ public class DepartmentListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<DepartmentVo> result = null;
 		DepartmentDao dao = new DepartmentDao();
-		List<DepartmentVo> result = dao.selectDepartmentList();
+		String search = request.getParameter("search");
+		
+		if(search != null ) {
+			result = dao.selectDepartmentList(search);
+		}else {
+			result = dao.selectDepartmentList();
+		}
+		
+		
+		
 		request.setAttribute("departmentList", result);
-		
-		
+		if(search != null) {
+			request.setAttribute("search", search);
+		}
 		
 		request.getRequestDispatcher("/WEB-INF/view/department/list.jsp").forward(request, response);
 	}
