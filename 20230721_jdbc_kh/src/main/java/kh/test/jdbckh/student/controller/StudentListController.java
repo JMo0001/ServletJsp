@@ -34,18 +34,26 @@ public class StudentListController extends HttpServlet {
 		System.out.println("/student/list doGET() 진입");
 		//TODO DB 연동
 		//1. 전달받은 parameter 읽어내기 > 없다
+		String searchWord = request.getParameter("searchWord");
 		//2. 전달받은 데이터를 활용 > 없어.
 		//2. DB 학생 상세 정보 가져오기.
 		
 		//dao에 있는 메소드를 호출.
 		StudentDao dao = new StudentDao();
+		List<StudentVo> result = null;
+		if(searchWord != null) {
+			System.out.println("[Mo] : "+searchWord);
+			result = dao.selectListStudent(searchWord);
+		} else {
+			result = dao.selectListStudent();
+		}
 //		dao.selectListStudent();
-		List<StudentVo> result = dao.selectListStudent();
 		//3. DB로부터 전달받은 데이터를 JSP에 전달함.
 		request.setAttribute("studentList", result);
-		request.setAttribute("aaa", "그냥 속성값 테스트 해봄");
-		request.setAttribute("bbb", "그냥 속성값 테스트 해봄2");
-		request.setAttribute("ccc", 333);
+		if(searchWord !=null) {
+			request.setAttribute("searchWord", searchWord);
+		}
+		//4, JSP 파일 forward로 ㅕㅇㄹ기
 		request.getRequestDispatcher("/WEB-INF/view/student/list.jsp").forward(request, response);
 		
 	}
