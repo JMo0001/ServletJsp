@@ -51,7 +51,7 @@ public class DepartmentListController extends HttpServlet {
 			result = service.selectDepartmentList(search);
 		}else {
 //			result = dao.selectDepartmentList();	//전체
-			result = service.selectDepartmentList(1, 10);
+			result = service.selectDepartmentList(currentPage, 10);
 		}
 		
 		

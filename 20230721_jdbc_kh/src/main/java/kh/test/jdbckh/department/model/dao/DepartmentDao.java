@@ -50,10 +50,11 @@ public class DepartmentDao {
 		ResultSet rs = null;
 		String query = "select "
 				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
-				+ " from tb_department where department_no = "+"'"+departmentNo+"'";
+				+ " from tb_department where department_no = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, departmentNo );
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				result = new DepartmentVo();
