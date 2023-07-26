@@ -14,20 +14,45 @@ import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
 
 public class DepartmentDao {
 	
-	
-	public DepartmentVo selectOneDepartment(String departmentNo) {
-		DepartmentVo result = null;
-		
-		Connection conn = null;
+	public int insertDepartment(Connection conn, DepartmentVo vo) {
+		int result = 0;
+		String query = "insert into tb_department (DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY) "
+				+ " values (?,?,?,?,to_number(?))";
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String query = "select * from tb_department where department_no = "+"'"+departmentNo+"'";
 		
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, vo.getDepartmentNo());
+			pstmt.setString(2, vo.getDepartmentName());
+			pstmt.setString(3, vo.getCategory());
+			pstmt.setString(4, vo.getOpenYn());
+			pstmt.setString(5, vo.getCapacity());
 			
+			result = pstmt.executeUpdate();
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
+	//한 행 읽기
+	public DepartmentVo selectOneDepartment(Connection conn, String departmentNo) {	//oneSelect
+		DepartmentVo result = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select "
+				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
+				+ " from tb_department where department_no = "+"'"+departmentNo+"'";
+		
+		try {
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -36,38 +61,28 @@ public class DepartmentDao {
 				result.setDepartmentName(rs.getString("department_name"));
 				result.setCategory(rs.getString("category"));
 				result.setOpenYn(rs.getString("open_yn"));
-				result.setCapacity(rs.getInt("capacity"));
-				
+				result.setCapacity(rs.getString("capacity"));
 			}
-			
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
-			close(conn);
 		}
-		
-		
 		return result;
 	}
 	
 	
-	
-	public List<DepartmentVo> selectDepartmentList() {	//listAll
+	//전체 리스트
+	public List<DepartmentVo> selectDepartmentList(Connection conn) {	//listAll
 		List<DepartmentVo> result = null;
 
-		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select * from tb_department";
-		
-		
+		String query = "select "
+				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
+				+ " from tb_department";
 			try {
-				conn=getConnection();
 				pstmt = conn.prepareStatement(query);
 				rs=pstmt.executeQuery();
 				
@@ -78,39 +93,31 @@ public class DepartmentDao {
 					vo.setDepartmentName(rs.getString("department_name"));
 					vo.setCategory(rs.getString("category"));
 					vo.setOpenYn(rs.getString("open_yn"));
-					vo.setCapacity(rs.getInt("capacity"));
+					vo.setCapacity(rs.getString("capacity"));
 					
 					result.add(vo);
 				}
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(rs);
 				close(pstmt);
-				close(conn);
 			}
-		
-		
-		
-		
 		
 		return result;
 	}
 	//검색용
-	public List<DepartmentVo> selectDepartmentList(String search) {
+	public List<DepartmentVo> selectDepartmentList(Connection conn, String search) {
 		List<DepartmentVo> result = null;
 
-		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select * from tb_department "
+		String query = "select "
+				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
+				+ " from tb_department "
 				+ "	where department_name like ? or category like ?";
 		
-		
 			try {
-				Class.forName("oracle.jdbc.driver.OracleDriver");
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE","kh","kh");
 				pstmt = conn.prepareStatement(query);
 				search = "%"+search+"%";
 				pstmt.setString(1, search);
@@ -125,46 +132,40 @@ public class DepartmentDao {
 					vo.setDepartmentName(rs.getString("department_name"));
 					vo.setCategory(rs.getString("category"));
 					vo.setOpenYn(rs.getString("open_yn"));
-					vo.setCapacity(rs.getInt("capacity"));
+					vo.setCapacity(rs.getString("capacity"));
 					
 					result.add(vo);
 				}
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(rs);
 				close(pstmt);
-				close(conn);
 			}
 		return result;
 	}
 
-	
-	public List<DepartmentVo> selectDepartmentList(int currentPage, int pageSize) {// Paging
+	//페이징
+	public List<DepartmentVo> selectDepartmentList(Connection conn, int currentPage, int pageSize) {
 		// int currentPage 현재 페이지 //	int pageSize 페이지당 글 개수
 		List<DepartmentVo> result = null;
 
-		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String queryTotalCnt = "select count(*) cnt from tb_department";
 		String query = "select * from "
 				+ " (select tb1.*, rownum rn "
-				+ " from (select * from tb_department order by department_no asc) tb1 "
+				+ " from (select "
+				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
+				+ " from tb_department order by department_no asc) tb1 "
 				+ " ) tb2"
 				+ " where rn between ? and ?";
-		
 		
 		int totalCnt =0;
 		int startRownum =0;
 		int endRownum =0;
 		
-		
 			try {
-				conn=getConnection();
-				
 				pstmt=conn.prepareStatement(queryTotalCnt);
 				rs=pstmt.executeQuery();
 				if(rs.next()) {
@@ -192,7 +193,7 @@ public class DepartmentDao {
 					vo.setDepartmentName(rs.getString("department_name"));
 					vo.setCategory(rs.getString("category"));
 					vo.setOpenYn(rs.getString("open_yn"));
-					vo.setCapacity(rs.getInt("capacity"));
+					vo.setCapacity(rs.getString("capacity"));
 					
 					result.add(vo);
 				}
@@ -201,8 +202,32 @@ public class DepartmentDao {
 			} finally {
 				close(rs);
 				close(pstmt);
-				close(conn);
 			}
 		return result;
 	}
+	
+	//총 글 개수
+//	public int getTotalCount(Connection conn) {
+//		int result = 0;	//	총 글 개수
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		String query = "select count(*) cnt from tb_department";
+//		
+//			try {
+//				pstmt=conn.prepareStatement(query);
+//				rs=pstmt.executeQuery();
+//				if(rs.next()) {
+//					result = rs.getInt("cnt");
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			} finally {
+//				close(rs);
+//				close(pstmt);
+//			}
+//			System.out.println("총 글 개수 : "+result);
+//		return result;
+//	}
 }

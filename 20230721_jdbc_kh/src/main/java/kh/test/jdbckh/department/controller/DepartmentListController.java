@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kh.test.jdbckh.department.model.dao.DepartmentDao;
+import kh.test.jdbckh.department.model.service.DepartmentService;
 import kh.test.jdbckh.department.model.vo.DepartmentVo;
 
 /**
@@ -32,7 +33,7 @@ public class DepartmentListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<DepartmentVo> result = null;
-		DepartmentDao dao = new DepartmentDao();
+		DepartmentService service = new DepartmentService();
 		String search = request.getParameter("search");	//검색
 		
 		String pageNoStr = request.getParameter("pageNo");
@@ -47,10 +48,10 @@ public class DepartmentListController extends HttpServlet {
 		
 		
 		if(search != null ) {
-			result = dao.selectDepartmentList(search);
+			result = service.selectDepartmentList(search);
 		}else {
 //			result = dao.selectDepartmentList();	//전체
-			result = dao.selectDepartmentList(1, 10);
+			result = service.selectDepartmentList(1, 10);
 		}
 		
 		

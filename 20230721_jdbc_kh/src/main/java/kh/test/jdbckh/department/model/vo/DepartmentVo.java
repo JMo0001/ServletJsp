@@ -14,7 +14,8 @@ public class DepartmentVo {
 	private String departmentName;
 	private String category;
 	private String openYn;
-	private int capacity;
+//	private int capacity;
+	private String capacity;
 	@Override
 	public String toString() {
 		return "DepartmentVo [departmentNo=" + departmentNo + ", departmentName=" + departmentName + ", category="
@@ -44,12 +45,13 @@ public class DepartmentVo {
 	public void setOpenYn(String openYn) {
 		this.openYn = openYn;
 	}
-	public int getCapacity() {
+	public String getCapacity() {
 		return capacity;
 	}
-	public void setCapacity(int capacity) {
+	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
+	
 	
 	
 	

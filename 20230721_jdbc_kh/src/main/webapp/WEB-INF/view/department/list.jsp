@@ -11,7 +11,9 @@
 <body>
 	<h2>학과 리스트</h2>
 	
-	
+	<div>
+	<a href="<%=request.getContextPath()%>/department/insert">학과 등록</a>
+	</div>
 	<div>
 		<form action ="<%=request.getContextPath()%>/department/list" method="get" >
 			<input type="search" name="search">
@@ -29,7 +31,6 @@
 		<h3><a href = "<%=request.getContextPath() %>/department/list">전체 보기</a></h3>
 		<table border = "1">
 			<tr>
-		
 		<%
 		for(int i=0; i<volist.size();i++){
 			DepartmentVo vo = volist.get(i);

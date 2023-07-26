@@ -7,22 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kh.test.jdbckh.department.model.dao.DepartmentDao;
-import kh.test.jdbckh.department.model.service.DepartmentService;
-import kh.test.jdbckh.department.model.vo.DepartmentVo;
-
-
 /**
- * Servlet implementation class DepartmentGetController
+ * Servlet implementation class DepartmentInsertServlet
  */
-@WebServlet("/department/get")
-public class DepartmentGetController extends HttpServlet {
+@WebServlet("/department/insert")
+public class DepartmentInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DepartmentGetController() {
+    public DepartmentInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +26,9 @@ public class DepartmentGetController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String departmentNo = request.getParameter("dno");
-		DepartmentService service = new DepartmentService();
-		DepartmentVo vo = service.selectOneDepartment(departmentNo);
-		request.setAttribute("oneVo", vo);
+		request.getRequestDispatcher("/WEB-INF/view/department/insert.jsp").forward(request, response);
 		
-		
-		request.getRequestDispatcher("/WEB-INF/view/department/get.jsp").forward(request, response);
+	
 	}
 
 	/**

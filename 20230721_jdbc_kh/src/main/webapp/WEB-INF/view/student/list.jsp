@@ -10,7 +10,9 @@
 </head>
 <body>
 	<h2>학생 리스트</h2>
-	
+	<div>
+		<a href="<%=request.getContextPath()%>/student/insert">학생등록</a>
+	</div>
 	<div>
 		<form action = "<%=request.getContextPath()%>/student/list" method="get">
 			<input type="search" name="searchWord">
@@ -21,7 +23,7 @@
 	
 	<%
 	//JSP Tag -- java 문법
-	List<StudentVo> volist = (List<StudentVo>) request.getAttribute("studentList");
+	List<StudentVo> volist = (List<StudentVo>)request.getAttribute("studentList");
 	String searchWord = (String)request.getAttribute("searchWord");
 	if(searchWord != null){
 	%>
@@ -50,9 +52,10 @@
 			<th>지도 교수 번호</th>
 		</tr>
 		<%
-		for (int i = 0; i < volist.size(); i++) {
+		for (int i = 0; i <volist.size(); i++) {
 			StudentVo vo = volist.get(i);
 		%>
+		
 
 		<tr>
 			<td><a href="<%=request.getContextPath()%>/student/get?sno=<%=vo.getStudentNo()%>"><%=vo.getStudentNo()%></a></td>
@@ -72,12 +75,44 @@
 	</table>
 	<div>
 	<%
-	for(int i=1; i<=10;i++){
-		
+	int startPageNum = (Integer)request.getAttribute("startPageNum");
+	int endPageNum = (Integer)request.getAttribute("endPageNum");
+	int currentPage = (Integer)request.getAttribute("currentPage");
+	int totalPageNum = (Integer)request.getAttribute("totalPageNum");
+	if(startPageNum != 1 && searchWord != null){
+	%>	
+	<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=startPageNum-1%>&searchWord=<%=searchWord%>"><span>이전</span></a>
+	<%
+	}else if(startPageNum != 1 && searchWord == null) {
+			%>
+			<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=startPageNum-1%>"><span>이전</span></a>
+			
+			<%
+	}
+	
+	for(int i=startPageNum; i<=endPageNum;i++){
+		if(searchWord != null){
+			%>
+			<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=i %>&searchWord=<%=searchWord %>"><span><%=i %></span></a>
+		<%
+		}else{
+			
 	%>
 		<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=i %>"><span><%=i %></span></a>
 	<%
+		}	//	else
 	}	//for
+	if(endPageNum < totalPageNum  && searchWord != null){
+		%>
+		<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=endPageNum+1%>&searchWord=<%=searchWord%>"><span>다음</span></a>
+		
+		<%
+	} else if(endPageNum < totalPageNum  && searchWord == null){
+		%>
+		<a href="<%=request.getContextPath()%>/student/list?pageNo=<%=endPageNum+1%>"><span>다음</span></a>
+		
+		<%
+	}
 	%>
 	</div>
 	<%

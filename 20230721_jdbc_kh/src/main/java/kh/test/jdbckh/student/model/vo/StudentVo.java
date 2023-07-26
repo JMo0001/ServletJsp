@@ -17,9 +17,11 @@ public class StudentVo {
 	private String studentName;
 	private String studentSsn;
 	private String studentAddress;
-	private Date entranceDate;
+//	private Date entranceDate;	//view에서 입력받은 데이터가 있는 경우 String 자료형 사용.
+	private String entranceDate;
 	private String absenceYn;
 	private String coachProfessorNo;
+	
 	private String departmentName;
 	
 	
@@ -61,10 +63,10 @@ public class StudentVo {
 	public void setStudentAddress(String studentAddress) {
 		this.studentAddress = studentAddress;
 	}
-	public Date getEntranceDate() {
+	public String getEntranceDate() {
 		return entranceDate;
 	}
-	public void setEntranceDate(Date entranceDate) {
+	public void setEntranceDate(String entranceDate) {
 		this.entranceDate = entranceDate;
 	}
 	public String getAbsenceYn() {
