@@ -10,7 +10,31 @@
 </head>
 <body>
 	<h2>클래스 리스트</h2>
-	<%List<TbClassVo> volist = (List<TbClassVo>)request.getAttribute("tbClassList"); %>
+	<div>
+		<form action ="<%=request.getContextPath()%>/class/list" method = "get">
+			<input type="search" name="searchWord">
+			<input type="submit" value="찾기">
+		</form>
+	</div>
+	
+	
+	
+	<%
+	List<TbClassVo> volist = (List<TbClassVo>)request.getAttribute("tbClassList"); 
+	String searchWord = (String)request.getAttribute("searchWord");
+	if(searchWord != null){
+	%>	
+		<h2><%=searchWord %>검색 결과</h2>
+		<h3><a href ="<%=request.getContextPath()%>/class/list">전체보기</a></h3>
+	<%	
+	}
+	if(volist == null | volist.size() ==0){
+	%>
+		<h2>결과물이 없습니다.</h2>
+	<%
+	}else{
+	%>
+		
 	
 	<table border ="1">
 		<tr>
@@ -21,7 +45,6 @@
 		<% 
 			for(int i=0; i<volist.size();i++){
 				TbClassVo vo = volist.get(i);
-				
 		%>
 		<tr>
 			<td><a href="<%=request.getContextPath()%>/class/get?cno=<%=vo.getClassNo() %>"><%=vo.getClassNo() %></a></td>
@@ -32,5 +55,8 @@
 			}
 		%>
 	</table>
+	<%
+	}	//	searh- else
+	%>
 </body>
 </html>

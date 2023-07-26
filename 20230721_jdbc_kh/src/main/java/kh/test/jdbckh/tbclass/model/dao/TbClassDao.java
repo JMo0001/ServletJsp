@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
 import kh.test.jdbckh.tbclass.model.vo.TbClassVo;
 
 public class TbClassDao {
@@ -28,8 +29,7 @@ public class TbClassDao {
 		
 		
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "kh", "kh");
+			conn = getConnection();
 			pstmt = conn.prepareStatement(qeury);
 			pstmt.setString(1, classNo);
 			rs = pstmt.executeQuery();
@@ -44,10 +44,12 @@ public class TbClassDao {
 			}
 			
 			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
 		}
 		
 		
@@ -72,7 +74,7 @@ public class TbClassDao {
 	
 	
 	
-	public List<TbClassVo> selectListClass() {
+	public List<TbClassVo> selectListClass() {	//	selectAll
 		
 		List<TbClassVo> result = null;
 		
@@ -82,8 +84,7 @@ public class TbClassDao {
 		
 		String query = "select class_no, class_name from tb_class";
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "kh", "kh");
+			conn = getConnection();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			result = new ArrayList<TbClassVo>();
@@ -97,18 +98,12 @@ public class TbClassDao {
 				result.add(vo);
 			}
 		
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			close(rs);
+			close(pstmt);
+			close(conn);
 		}
 		
 		
@@ -116,4 +111,52 @@ public class TbClassDao {
 		
 	}
 
+	
+	
+	public List<TbClassVo> selectListClass(String searchWord) {
+		
+		List<TbClassVo> result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query = "select * from tb_class "
+				+ " where class_name like ?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(query);
+			
+			searchWord = "%"+searchWord+"%";
+			pstmt.setString(1, searchWord);
+			rs = pstmt.executeQuery();
+			
+			result = new ArrayList<TbClassVo>();
+			
+			while(rs.next()==true) {
+				TbClassVo vo = new TbClassVo();
+				
+				vo.setClassNo(rs.getString("class_no"));
+				vo.setClassName(rs.getString("class_name"));
+				
+				result.add(vo);
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
+		
+		
+		return result;
+		
+	}	
+	
+	
+	
+	
 }

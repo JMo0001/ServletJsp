@@ -33,7 +33,20 @@ public class TbClassListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		TbClassDao dao = new TbClassDao();
 		List<TbClassVo> result = dao.selectListClass();
+		String searchWord = request.getParameter("searchWord");
+		
+		if(searchWord != null) {
+			result = dao.selectListClass(searchWord);
+		}else {
+			result = dao.selectListClass();
+		}
+		
 		request.setAttribute("tbClassList", result);
+		
+		if(searchWord != null) {
+			request.setAttribute("searchWord", searchWord);
+		}
+		
 		request.getRequestDispatcher("/WEB-INF/view/class/list.jsp").forward(request, response);
 	}
 
