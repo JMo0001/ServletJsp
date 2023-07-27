@@ -245,7 +245,7 @@ public class DepartmentDao {
 		startRownum = (currentPage-1)*pageSize +1;
 		endRownum = ((currentPage*pageSize) > totalCnt) ? totalCnt: (currentPage*pageSize);
 			try {
-				
+				search ="%"+search+"%";
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, search);
 				pstmt.setString(2, search);
