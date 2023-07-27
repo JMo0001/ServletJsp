@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kh.test.jdbckh.professor.model.dao.ProfessorDao;
+import kh.test.jdbckh.professor.model.service.ProfessorService;
 import kh.test.jdbckh.professor.model.vo.ProfessorVo;
 
 /**
@@ -31,9 +32,8 @@ public class ProfessorGetController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String professorNo = request.getParameter("pno");
 //		System.out.println(professorNo);
-		ProfessorDao dao = new ProfessorDao();
-		ProfessorVo vo = dao.selectProfessorGet(professorNo);
-//		System.out.println(vo);
+		ProfessorService service = new ProfessorService();
+		ProfessorVo vo = service.selectProfessorGet(professorNo);
 		request.setAttribute("oneVo", vo);
 		
 		
