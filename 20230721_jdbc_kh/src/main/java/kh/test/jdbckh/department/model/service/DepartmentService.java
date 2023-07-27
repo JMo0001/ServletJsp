@@ -28,12 +28,12 @@ public class DepartmentService {
 		return result;
 	}
 
-	public List<DepartmentVo> selectDepartmentList(){
-		Connection conn =getConnection();
-		List<DepartmentVo> result = dao.selectDepartmentList(conn);
-		close(conn);
-		return result;
-	}
+//	public List<DepartmentVo> selectDepartmentList(){
+//		Connection conn =getConnection();
+//		List<DepartmentVo> result = dao.selectDepartmentList(conn);
+//		close(conn);
+//		return result;
+//	}
 	
 	public List<DepartmentVo> selectDepartmentList(String search) {
 		Connection conn =getConnection();

@@ -2,7 +2,6 @@ package kh.test.jdbckh.common.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +26,23 @@ public class JdbcTemplate {
 		}
 		return conn;
 	}
-
+	
+	public static Connection getConnectionkhl() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE","khl","khl");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(conn!=null) {
+			System.out.println("DB 연결 성공");
+		}else {
+			System.out.println("==================DB 연결 실패==================");
+		}
+		return conn;
+	}
 	
 	public static void close(Connection con) {
 		try {

@@ -14,6 +14,7 @@ import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
 
 public class DepartmentDao {
 	
+	//insert
 	public int insertDepartment(Connection conn, DepartmentVo vo) {
 		int result = 0;
 		String query = "insert into tb_department (DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY) "
@@ -38,9 +39,6 @@ public class DepartmentDao {
 		
 		return result;
 	}
-	
-	
-	
 	
 	//한 행 읽기
 	public DepartmentVo selectOneDepartment(Connection conn, String departmentNo) {	//oneSelect
@@ -74,39 +72,7 @@ public class DepartmentDao {
 	}
 	
 	
-	//전체 리스트
-	public List<DepartmentVo> selectDepartmentList(Connection conn) {	//listAll
-		List<DepartmentVo> result = null;
 
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String query = "select "
-				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
-				+ " from tb_department";
-			try {
-				pstmt = conn.prepareStatement(query);
-				rs=pstmt.executeQuery();
-				
-				result = new ArrayList<DepartmentVo>();
-				while (rs.next()==true) {
-					DepartmentVo vo = new DepartmentVo();
-					vo.setDepartmentNo(rs.getString("department_no"));
-					vo.setDepartmentName(rs.getString("department_name"));
-					vo.setCategory(rs.getString("category"));
-					vo.setOpenYn(rs.getString("open_yn"));
-					vo.setCapacity(rs.getString("capacity"));
-					
-					result.add(vo);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close(rs);
-				close(pstmt);
-			}
-		
-		return result;
-	}
 	//검색용
 	public List<DepartmentVo> selectDepartmentList(Connection conn, String search) {
 		List<DepartmentVo> result = null;
@@ -255,9 +221,7 @@ public class DepartmentDao {
 		System.out.println("총 글 개수 : "+result);
 		return result;
 	}
-	
-	
-	
+		
 	//검색 + 페이징
 	public List<DepartmentVo> selectDepartmentList(Connection conn, int currentPage, int pageSize, int totalCnt, String search ) {
 		// int currentPage 현재 페이지 //	int pageSize 페이지당 글 개수
@@ -281,20 +245,6 @@ public class DepartmentDao {
 		startRownum = (currentPage-1)*pageSize +1;
 		endRownum = ((currentPage*pageSize) > totalCnt) ? totalCnt: (currentPage*pageSize);
 			try {
-//				pstmt=conn.prepareStatement(queryTotalCnt);
-//				rs=pstmt.executeQuery();
-//				if(rs.next()) {
-//					totalCnt=rs.getInt("cnt");
-//				}
-////				총페이지수 :  총글개수/한페이징당개수 + (총글개수%한페이징당개수 != 0 ? 1 : 0)
-////				startRownum : (현재페이지-1)*한페이징당개수 + 1
-////				endRownum  :  (현재페이지*한페이징당개수>총글개수 ? 총글개수 : 현재페이지*한페이징당개수)
-//
-//				startRownum = (currentPage-1)*pageSize+1;
-//				endRownum = ((currentPage*pageSize)>totalCnt) ? totalCnt: (currentPage*pageSize);
-//				
-//				close(rs);
-//				close(pstmt);
 				
 				pstmt = conn.prepareStatement(query);
 				pstmt.setString(1, search);
@@ -322,6 +272,38 @@ public class DepartmentDao {
 		return result;
 	}
 	
-	
+	//전체 리스트
+//	public List<DepartmentVo> selectDepartmentList(Connection conn) {	//listAll
+//		List<DepartmentVo> result = null;
+//
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String query = "select "
+//				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
+//				+ " from tb_department";
+//			try {
+//				pstmt = conn.prepareStatement(query);
+//				rs=pstmt.executeQuery();
+//				
+//				result = new ArrayList<DepartmentVo>();
+//				while (rs.next()==true) {
+//					DepartmentVo vo = new DepartmentVo();
+//					vo.setDepartmentNo(rs.getString("department_no"));
+//					vo.setDepartmentName(rs.getString("department_name"));
+//					vo.setCategory(rs.getString("category"));
+//					vo.setOpenYn(rs.getString("open_yn"));
+//					vo.setCapacity(rs.getString("capacity"));
+//					
+//					result.add(vo);
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			} finally {
+//				close(rs);
+//				close(pstmt);
+//			}
+//		
+//		return result;
+//	}	
 	
 }
