@@ -1,7 +1,9 @@
 package kh.test.jdbckh.department.model.service;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
 import kh.test.jdbckh.department.model.dao.DepartmentDao;
@@ -40,17 +42,32 @@ public class DepartmentService {
 		return result;
 	}
 	
-	public List<DepartmentVo> selectDepartmentList(int currentPage, int pageSize){
+	public Map<String, Object> selectDepartmentList(int currentPage, int pageSize){
 		Connection conn = getConnection();
-		List<DepartmentVo> result = dao.selectDepartmentList(conn, currentPage, pageSize);
+		int totalCnt = dao.getTotalCount(conn);
+		List<DepartmentVo> result = dao.selectDepartmentList(conn,currentPage,pageSize,totalCnt);
+		close(conn);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCnt", totalCnt);
+		map.put("departmentList", result);
+		return map;
+	}
+	
+	public Map<String, Object> selectDepartmentList(int currentPage, int pageSize, String search){
+		Connection conn = getConnection();
+		int totalCnt = dao.getSearchTotalCount(conn,search);
+		List<DepartmentVo> result = dao.selectDepartmentList(conn, currentPage, pageSize, totalCnt, search);
+		close(conn);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCnt", totalCnt);
+		map.put("departmentList", result);
+		return map;
+	}
+	
+	public int getTotalCount() {
+		Connection conn = getConnection();
+		int result = dao.getTotalCount(conn);
 		close(conn);
 		return result;
 	}
-	
-//	public int getTotalCount() {
-//		Connection conn = getConnection();
-//		int result = dao.getTotalCount(conn);
-//		close(conn);
-//		return result;
-//	}
 }

@@ -44,7 +44,9 @@ public class StudentService {
 		close(conn);
 		return result;
 	}
-	public Map<String, Object> selectListStudent(int currentPage, int pageSize ) {  // 페이징처리
+	
+	//페이징 처리
+	public Map<String, Object> selectListStudent(int currentPage, int pageSize ) {  
 		Connection conn = getConnection();
 		int totalCnt = dao.getTotalCount(conn);
 		List<StudentVo> result =  dao.selectListStudent(conn,currentPage, pageSize, totalCnt);
@@ -54,7 +56,9 @@ public class StudentService {
 		map.put("studentList", result);
 		return map;
 	}
-	public Map<String, Object> selectListStudent(int currentPage, int pageSize, String searchWord ) {  // 페이징처리 + 검색
+	
+	//페이징 처리 + 검색
+	public Map<String, Object> selectListStudent(int currentPage, int pageSize, String searchWord ) {  
 		Connection conn = getConnection();
 		int totalCnt = dao.getSearchTotalCount(conn, searchWord);
 		List<StudentVo> result =  dao.selectListStudent(conn,currentPage, pageSize, totalCnt, searchWord);
@@ -64,6 +68,7 @@ public class StudentService {
 		map.put("studentList", result);
 		return map;
 	}
+	//전체 글 갯수 확인
 	public int getTotalCount() {
 		Connection conn = getConnection();
 		int result = dao.getTotalCount(conn);
