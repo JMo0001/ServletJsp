@@ -33,7 +33,19 @@ public class BoardInsertServlet extends HttpServlet {
 		System.out.println("/board/insert doGET()");
 		//답글작성시 참조 글 번호
 		String bnoStr = request.getParameter("bno");
-		request.getAttribute(bnoStr);
+		int bno = 0;
+		if(bnoStr != null && !bnoStr.equals("")) {
+			try {
+				bno = Integer.parseInt(bnoStr);
+				request.setAttribute("bno", bnoStr);
+			} catch (Exception e) {
+				e.printStackTrace();
+				//숫자로 못바꾸면 작성에 실패
+				//오류페이지 이동
+				//TODO
+			}
+			
+		}
 		
 		request.getRequestDispatcher("/WEB-INF/view/board/insert.jsp").forward(request, response);
 	}
@@ -52,13 +64,21 @@ public class BoardInsertServlet extends HttpServlet {
 		int bno = 0;
 		if(bnoStr != null && bnoStr.equals("")) {
 			try {
-			bno = Integer.parseInt(bnoStr);
+				bno = Integer.parseInt(bnoStr);
 			}catch (NumberFormatException e) {
 				e.printStackTrace();
+				//숫자로 못바꾸면 작성에 실패
+				//오류페이지 이동
+				//TODO
 			}
 		}
 		//bno : 0이면 원본글, 그외 답글의 참조번호
 		int result = service.insert(new BoardDto(bno, btitle, bcontent, mid));
+		if(result <0) {
+			//오류 발생
+			//오류페이지로 이동
+			//TODO
+		}
 		
 		response.sendRedirect(request.getContextPath()+"/board/list");
 	}

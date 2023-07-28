@@ -28,7 +28,7 @@
 		<c:when test="${not empty departmentList }">
 			<h3>${search }검색 결과</h3>
 			<h3><a href = "<%=request.getContextPath() %>/department/list">전체 보기</a></h3>
-			<c:forEach items="${departmentList }" var="var">
+			
 				<table border = "1">
 					<tr>
 						<th>학과 번호</th>
@@ -37,6 +37,7 @@
 						<th>개설 여부</th>
 						<th>정원</th>
 					</tr>
+					<c:forEach items="${departmentList }" var="var">
 					<tr>
 						<td><a href="<%=request.getContextPath() %>/department/get?dno=${var.departmentNo} ">${var.departmentNo }</a></td>
 						<td>${var.departmentName }</td>
@@ -44,8 +45,9 @@
 						<td>${var.openYn }</td>
 						<td>${var.capacity }</td>
 					</tr>
+					</c:forEach>
 				</table>
-			</c:forEach>
+				
 		</c:when>
 		<c:otherwise>
 			<h2>결과물이 없습니다.</h2>
@@ -55,8 +57,9 @@
 </c:if>
 
 <c:if test="${empty search }">
-	<c:forEach items="${departmentList }" var="var">
+	
 		<table border = "1">
+			<c:forEach items="${departmentList }" var="var">
 			<tr>
 				<th>학과 번호</th>
 				<th>학과 이름</th>
@@ -65,8 +68,9 @@
 				<td><a href="<%=request.getContextPath() %>/department/get?dno=${var.departmentNo} ">${var.departmentNo }</a></td>
 				<td>${var.departmentName }</td>
 			</tr>
+			</c:forEach>
 		</table>
-	</c:forEach>
+	
 </c:if>
 
 <div>		

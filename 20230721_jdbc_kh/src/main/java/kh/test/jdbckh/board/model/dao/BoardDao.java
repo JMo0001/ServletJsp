@@ -63,7 +63,7 @@ public class BoardDao {
 			System.out.println("[Board Dao insert] dto:" + dto);
 			int result = 0;
 			String query = null;
-			if(dto.getBno()==0) {
+			if(dto.getBno()==0) {	//원본 글 작성
 				query = "insert into BOARD values(SEQ_BOARD_BNO.nextval, ?, ?, default, ?, SEQ_BOARD_BNO.nextval, 0,0)";
 			}else {
 				query = "insert into BOARD values (SEQ_BOARD_BNO.nextval, ?, ?, default, ?, (select bref from board where bno = ?), (select bre_level+1 from board where bno = ?), (select bre_step+1 from board where bno = ?))";
@@ -99,8 +99,8 @@ public class BoardDao {
 			PreparedStatement pstmt = null;
 			try {
 				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, dto.getBtitle());
-				pstmt.setString(2, dto.getBtitle());
+				pstmt.setInt(1, dto.getBno());
+				pstmt.setInt(2, dto.getBno());
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
