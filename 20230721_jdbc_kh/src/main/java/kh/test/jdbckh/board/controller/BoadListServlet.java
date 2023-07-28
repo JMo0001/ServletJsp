@@ -1,11 +1,16 @@
 package kh.test.jdbckh.board.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import kh.test.jdbckh.board.model.dto.BoardDto;
+import kh.test.jdbckh.board.model.service.BoardService;
 
 /**
  * Servlet implementation class BoadListServlet
@@ -28,8 +33,9 @@ public class BoadListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.request.getParameter()
 		//2.service.selectList()
+		List<BoardDto> result = new BoardService().selectList();
 		//3
-//		request.setAttribute("boardList", result);
+		request.setAttribute("boardList", result);
 		//4.
 		request.getRequestDispatcher("/WEB-INF/view/board/list.jsp").forward(request, response);
 	}
