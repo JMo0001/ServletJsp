@@ -28,7 +28,7 @@
 		</form>
 	</div>
 	
-	
+
 	<%
 	//JSP Tag -- java 문법
 	List<StudentVo> volist = (List<StudentVo>)request.getAttribute("studentList");
