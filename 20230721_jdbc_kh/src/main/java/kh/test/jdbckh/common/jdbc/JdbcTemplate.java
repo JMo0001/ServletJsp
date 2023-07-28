@@ -77,4 +77,27 @@ public class JdbcTemplate {
 		
 	}
 	
+	public static void setAutocommit(Connection conn, boolean auto) {
+		try {
+			conn.setAutoCommit(auto);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void commit(Connection conn) {
+		try {
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void rollback(Connection conn) {
+		try {
+			conn.rollback();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

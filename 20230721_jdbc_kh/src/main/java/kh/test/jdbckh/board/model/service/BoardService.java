@@ -29,7 +29,21 @@ private BoardDao dao = new BoardDao();
 	public int insert(BoardDto dto){
 		int result = 0;
 		Connection conn = getConnectionkhl();
-		result = dao.insert(conn, dto);
+		
+		setAutocommit(conn, false);
+		if(dto.getBno()==0) {	//원본글작성
+			result = dao.insert(conn, dto);
+		}else {	//답글작성
+			result = dao.update(conn, dto);
+			if(result>-1) {
+				result = dao.insert(conn, dto);
+			}
+		}
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
 		close(conn);
 		return result;
 	}
@@ -67,4 +81,6 @@ private BoardDao dao = new BoardDao();
 		close(conn);
 		return result;
 	}
+	
+	
 }

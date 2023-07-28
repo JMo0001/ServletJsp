@@ -46,6 +46,7 @@ c:if는 true/false 조언만 가능함 - else 없음.
 <c:forEach items="${volist }" var="vo" varStatus="cnt">
 	${cnt.index}, ${cnt.count }, ${vo.bwriteDate }<br>
 </c:forEach>
+<hr>
 
 
 
@@ -73,6 +74,7 @@ ${volist.get(2).bwriteDate }
  
 ${a1 }  : <%=request.getAttribute("a1") %><br>
 ${a2 }  : <%=request.getAttribute("a2") %><br>
+
 ${volist }  <hr> <%=request.getAttribute("volist") %><br>
 <% List<BoardDto> list = (List<BoardDto>)request.getAttribute("volist"); %>
 

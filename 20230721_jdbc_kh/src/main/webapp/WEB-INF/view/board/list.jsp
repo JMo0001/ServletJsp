@@ -13,19 +13,20 @@
 }
 .wrap-grid{
 	display:grid;
-	grid-template-columns: 1 5 2 2;
+	grid-template-columns: auto auto auto auto auto;
 	
 }
 </style>
 </head>
 <body>
-	[[초기 확인용 <%=request.getAttribute("boardList") %>]]
 	<h2>게시글</h2>
+	<div><a href="<%=request.getContextPath() %>/board/insert" >새글등록</a></div>
 	<div class="wrap-grid">
 		<div>번호</div>
 		<div>제목</div>
 		<div>작성자</div>
 		<div>작성일</div>
+		<div>옵션</div>
 <%
 List<BoardDto> boardList = (List<BoardDto>)request.getAttribute("boardList");
 if(boardList != null && boardList.size()>0){
@@ -36,6 +37,7 @@ if(boardList != null && boardList.size()>0){
 		<div><%=vo.getBtitle() %></div>
 		<div><%=vo.getMid() %></div>
 		<div><%=vo.getBwriteDate() %></div>
+		<div><a href="<%=request.getContextPath() %>/board/insert?bno=<%=vo.getBno() %>" >답글</a></div>
 <%
 	}
 }
