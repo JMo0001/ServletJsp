@@ -28,7 +28,10 @@
 		</form>
 	</div>
 	
-
+<c:if test="${not empty searchWord }">
+	<h3>${searchWord } 검색결과</h3>	
+	<h3><a href = "<%=request.getContextPath()%>/student/list">전체보기</a> </h3>	
+</c:if>
 	<%
 	//JSP Tag -- java 문법
 	List<StudentVo> volist = (List<StudentVo>)request.getAttribute("studentList");
