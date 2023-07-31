@@ -5,7 +5,7 @@ build/
 Servers/
 .metadata/
 properties/
-
+*.properties
 # Log file
 *.log
 

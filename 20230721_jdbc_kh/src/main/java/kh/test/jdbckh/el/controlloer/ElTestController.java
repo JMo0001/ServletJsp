@@ -21,7 +21,11 @@ public class ElTestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("a1", "aaa");
+   		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+   		
+   		request.setAttribute("a1", "aaa");
 		request.setAttribute("volist", new BoardService().selectList());
 		request.setAttribute("vo", new StudentService().selectOneStudent("A213046"));
 		request.getRequestDispatcher("/WEB-INF/view/eltest.jsp").forward(request, response);

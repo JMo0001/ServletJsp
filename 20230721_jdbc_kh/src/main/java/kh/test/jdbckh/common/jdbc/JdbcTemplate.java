@@ -5,12 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class JdbcTemplate {
 	private static Connection conn = null;
 	
 	//Singleton 패턴 >> Connection 객체가 많이 생성됨을 방지.
 	public static Connection getConnection() {
+		Properties prop = new Properties();
+		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE","kh","kh");
