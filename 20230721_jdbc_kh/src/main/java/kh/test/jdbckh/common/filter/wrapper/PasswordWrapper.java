@@ -18,12 +18,12 @@ public class PasswordWrapper extends HttpServletRequestWrapper{
 	public String getParameter(String name) {
 
 		if(name!=null && name.equals("pwd")) {	//request.getParameter("pwd") 가 호출되면
-			System.out.println("[ejkim] 암호화전 "+name.length()+", "+name);
+			System.out.println("[JMo] 암호화전 "+name.length()+", "+name);
 			name = getSha512(super.getParameter(name));	//88자 String << 아래 메소드에 의해서.
 		} else {	//request.getParameter("pwd외 다른이름") 가 호출되면
 			name=super.getParameter(name);
 		}
-		System.out.println("[ejkim] 암호화후 "+name.length()+", "+name);
+		System.out.println("[JMo] 암호화후 "+name.length()+", "+name);
 		return name;
 	}
 	
