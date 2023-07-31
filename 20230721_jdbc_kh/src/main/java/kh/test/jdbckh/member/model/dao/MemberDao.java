@@ -22,8 +22,7 @@ public class MemberDao {
 				
 				//TODO
 
-				String subquery = "select * from member"; // 정렬순서
-				String query = subquery;
+				String query = "select * from member"; // 정렬순서
 
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
