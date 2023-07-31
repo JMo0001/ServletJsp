@@ -4,6 +4,7 @@ bin/
 build/
 Servers/
 .metadata/
+properties/
 
 # Log file
 *.log
