@@ -75,5 +75,12 @@ private MemberDao dao = new MemberDao();
 		close(conn);
 		return result;
 	}
+	public int login( Member vo) {
+		int result = 0;
+		Connection conn = getConnectionkhl();
+		result = dao.login(conn, vo);
+		close(conn);
+		return result;
+	}
 
 }

@@ -17,7 +17,7 @@ public class BoardDao {
 			System.out.println("[Board Dao selectList]");
 			List<BoardDto> result = new ArrayList<BoardDto>();
 
-			String subquery = " select BNO, BTITLE, to_char(BWRITE_DATE, 'yyyy-mm-dd hh24:mi:ss') BWRITE_DATE, MID, BREF, BRE_LEVEL, BRE_STEP from BOARD ";
+			String subquery = " select BNO, BTITLE, to_char(BWRITE_DATE, 'yyyy-mm-dd hh24:mi:ss'), BWRITE_DATE, MID, BREF, BRE_LEVEL, BRE_STEP from BOARD ";
 			subquery += " order by BREF desc, BRE_STEP asc"; // 정렬순서
 			String query = subquery;
 

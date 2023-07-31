@@ -59,23 +59,28 @@ public class MemberDao {
 
 			// 한 행 삽입 - Member 자료형을 받아와야 함.
 			public int insert(Connection conn, Member dto) {
-				System.out.println("[Member Dao insert] dto:" + dto);
+				System.out.println("[Member Dto insert] dto:" + dto);
 				int result = 0;
-				String query = null;
+				String query = "insert into member (mid, mpwd, mname, memail) "
+						+ " values (?, ?, ?, ?)";
+				
 				PreparedStatement pstmt = null;
 				
 				try {
 					pstmt = conn.prepareStatement(query);
+					pstmt.setString(1, dto.getMid());
+					pstmt.setString(2, dto.getMpwd());
+					pstmt.setString(3, dto.getMname());
+					pstmt.setString(4, dto.getMemail());
+					result = pstmt.executeUpdate();
 					
-					
-				result = pstmt.executeUpdate();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				} finally {
 					close(pstmt);
 				}
 				
-				System.out.println("[Member Dao insert] return:" + result);
+				System.out.println("[Member Dto insert] return:" + result);
 				return result;
 			}
 			
