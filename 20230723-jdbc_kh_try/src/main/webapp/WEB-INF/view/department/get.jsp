@@ -11,7 +11,7 @@
 	<h2>학과 번호 검색 결과</h2>
 	
 	<div>
-<c:if test="${not empty dto }">
+<c:if test="${not empty getList }">
 		<table border="1">
 			<tr>
 				<td>학과번호</td>

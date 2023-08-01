@@ -25,13 +25,13 @@
 				<td>개설여부</td>
 				<td>정원</td>
 			</tr>
-<c:forEach items="${departmentList }" var="var">
+<c:forEach items="${departmentList }" var="dto">
 			<tr>
-				<td>${var.departmentNo }</td>
-				<td>${var.departmentName }</td>
-				<td>${var.category }</td>
-				<td>${var.openYn }</td>
-				<td>${var.capacity }</td>
+				<td>${dto.departmentNo }</td>
+				<td>${dto.departmentName }</td>
+				<td>${dto.category }</td>
+				<td>${dto.openYn }</td>
+				<td>${dto.capacity }</td>
 			</tr>
 </c:forEach>
 		</table>
