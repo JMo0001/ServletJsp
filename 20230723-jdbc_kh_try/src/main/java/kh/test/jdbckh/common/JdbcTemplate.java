@@ -27,6 +27,24 @@ public class JdbcTemplate {
 		return conn;
 	}
 	
+public static Connection getConnectionkh() {
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE","kh","kh");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(conn!=null) {
+			System.out.println("DB 연결 성공");
+		}else {
+			System.out.println("```````````````````DB 연결 실패```````````````");
+		}
+		return conn;
+	}
+	
 	public static void close(Connection con) {
 		try {
 			if(con != null)con.close();

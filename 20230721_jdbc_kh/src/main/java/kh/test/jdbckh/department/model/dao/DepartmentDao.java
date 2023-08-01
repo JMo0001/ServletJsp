@@ -1,7 +1,6 @@
 package kh.test.jdbckh.department.model.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,9 +71,10 @@ public class DepartmentDao {
 //	}
 	
 	public DepartmentVo selectOneDepartment(Connection conn, String departmentNo) {
+		System.out.println("[Dept Dao selectOne] departmentNo:"+departmentNo);
 		DepartmentVo result = null;
 		String query = "select department_no, department_name, category, open_yn, capacity "
-				+ " from department where department_no = ?";
+				+ " from tb_department where department_no = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -84,8 +84,8 @@ public class DepartmentDao {
 			
 			if(rs.next()) {
 				result = new DepartmentVo(
-						rs.getString("departement_no"), 
-						rs.getString("departemtnt_name"), 
+						rs.getString("department_no"), 
+						rs.getString("department_name"), 
 						rs.getString("category"), 
 						rs.getString("open_yn"), 
 						rs.getString("capacity")

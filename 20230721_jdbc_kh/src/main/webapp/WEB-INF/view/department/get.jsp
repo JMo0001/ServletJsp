@@ -14,22 +14,13 @@
 	<h2>찾는 학과 정보가 없습니다.</h2>
 </c:if>
 <c:if test="${not empty dvo }">
-	<h4>${dvo.departementNo }</h4>
+	<h4>${dvo.departmentNo }</h4>
 	학과이름 : ${dvo.departmentName }<br>
-	계열 :
-	개설여부 :
-	정원 :
+	계열 : ${dvo.category }<br>
+	개설여부 : ${dvo.openYn }<br>
+	정원 : ${dvo.capacity }<br>
 </c:if>
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
+	<a href="${pageContext.request.contextPath }/department/list">다시 찾기</a>	
 	
 	
 	<%-- <% DepartmentVo vo = (DepartmentVo)request.getAttribute("oneVo"); %>
