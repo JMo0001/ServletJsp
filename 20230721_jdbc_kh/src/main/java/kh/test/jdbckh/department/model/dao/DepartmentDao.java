@@ -41,26 +41,55 @@ public class DepartmentDao {
 	}
 	
 	//한 행 읽기
-	public DepartmentVo selectOneDepartment(Connection conn, String departmentNo) {	//oneSelect
+//	public DepartmentVo selectOneDepartment(Connection conn, String departmentNo) {	//oneSelect
+//		DepartmentVo result = null;
+//		
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String query = "select "
+//				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
+//				+ " from tb_department where department_no = ?";
+//		
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setString(1, departmentNo );
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				result = new DepartmentVo();
+//				result.setDepartmentNo(rs.getString("department_no"));
+//				result.setDepartmentName(rs.getString("department_name"));
+//				result.setCategory(rs.getString("category"));
+//				result.setOpenYn(rs.getString("open_yn"));
+//				result.setCapacity(rs.getString("capacity"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//		}
+//		return result;
+//	}
+	
+	public DepartmentVo selectOneDepartment(Connection conn, String departmentNo) {
 		DepartmentVo result = null;
-		
+		String query = "select department_no, department_name, category, open_yn, capacity "
+				+ " from department where department_no = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select "
-				+ " DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY "
-				+ " from tb_department where department_no = ?";
-		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, departmentNo );
+			pstmt.setString(1, departmentNo);
 			rs = pstmt.executeQuery();
+			
 			if(rs.next()) {
-				result = new DepartmentVo();
-				result.setDepartmentNo(rs.getString("department_no"));
-				result.setDepartmentName(rs.getString("department_name"));
-				result.setCategory(rs.getString("category"));
-				result.setOpenYn(rs.getString("open_yn"));
-				result.setCapacity(rs.getString("capacity"));
+				result = new DepartmentVo(
+						rs.getString("departement_no"), 
+						rs.getString("departemtnt_name"), 
+						rs.getString("category"), 
+						rs.getString("open_yn"), 
+						rs.getString("capacity")
+						);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

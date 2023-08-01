@@ -1,16 +1,38 @@
 <%@page import="kh.test.jdbckh.department.model.vo.DepartmentVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>학과 get</title>
+<title>학과 리스트</title>
 </head>
 <body>
-	<h2>학과 상세</h2>
+	<h2>학과 정보</h2>
+<c:if test="${empty dvo }">
+	<h2>찾는 학과 정보가 없습니다.</h2>
+</c:if>
+<c:if test="${not empty dvo }">
+	<h4>${dvo.departementNo }</h4>
+	학과이름 : ${dvo.departmentName }<br>
+	계열 :
+	개설여부 :
+	정원 :
+</c:if>
 	
-	<% DepartmentVo vo = (DepartmentVo)request.getAttribute("oneVo"); %>
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	<%-- <% DepartmentVo vo = (DepartmentVo)request.getAttribute("oneVo"); %>
 
 	<table border ="1">
 		<tr>
@@ -27,6 +49,6 @@
 			<td><%=vo.getOpenYn() %></td>
 			<td><%=vo.getCapacity() %></td>
 		</tr>
-	</table>
+	</table> --%>
 </body>
 </html>

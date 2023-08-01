@@ -14,8 +14,23 @@ public class DepartmentVo {
 	private String departmentName;
 	private String category;
 	private String openYn;
-//	private int capacity;
 	private String capacity;
+	
+	
+	
+	public DepartmentVo() {
+	}
+	
+	
+	public DepartmentVo(String departmentNo, String departmentName, String category, String openYn, String capacity) {
+		super();
+		this.departmentNo = departmentNo;
+		this.departmentName = departmentName;
+		this.category = category;
+		this.openYn = openYn;
+		this.capacity = capacity;
+	}
+	
 	@Override
 	public String toString() {
 		return "DepartmentVo [departmentNo=" + departmentNo + ", departmentName=" + departmentName + ", category="
@@ -45,12 +60,16 @@ public class DepartmentVo {
 	public void setOpenYn(String openYn) {
 		this.openYn = openYn;
 	}
-	public String getCapacity() {
-		return capacity;
-	}
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
+
+	public String getCapacity() {
+		return capacity;
+	}
+
+
+		
 	
 	
 	
