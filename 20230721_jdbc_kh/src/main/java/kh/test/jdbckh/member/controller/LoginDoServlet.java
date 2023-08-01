@@ -45,9 +45,12 @@ public class LoginDoServlet extends HttpServlet {
 		String sendUrl = request.getContextPath();
 		if(mpwd.equals(result)) {
 			System.out.println("로그인 성공");
+			request.getSession().setAttribute("successMsg", "로그인성공" );
+			request.getSession().setAttribute("SsLoginId", mid );
 			sendUrl += "/board/list";
 		}else {
 			System.out.println("로그인 실패");
+			request.getSession().setAttribute("failMsg", "로그인에 실패하였습니다.");
 			sendUrl += "/error";
 		}
 		response.sendRedirect(sendUrl);

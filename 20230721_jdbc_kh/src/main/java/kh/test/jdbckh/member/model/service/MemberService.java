@@ -68,17 +68,17 @@ private MemberDao dao = new MemberDao();
 	
 	//추가
 	//login
-	public String login(String mid) {
-		String result = null;
-		Connection conn =getConnectionkhl();
-		result = dao.login(conn, mid);
-		close(conn);
-		return result;
-	}
 	public int login( Member vo) {
 		int result = 0;
 		Connection conn = getConnectionkhl();
 		result = dao.login(conn, vo);
+		close(conn);
+		return result;
+	}
+	public String login(String mid) {
+		String result = null;
+		Connection conn =getConnectionkhl();
+		result = dao.login(conn, mid);
 		close(conn);
 		return result;
 	}

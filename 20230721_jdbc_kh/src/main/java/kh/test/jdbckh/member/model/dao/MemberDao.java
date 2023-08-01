@@ -119,7 +119,7 @@ public class MemberDao {
 			public int login(Connection conn, Member vo) {
 				
 				int result = 0;
-				String query = "select count(*) cnt from member where mid =? and mpwd = ?";
+				String query = "select count(*) cnt from member where mid =? and mpwd =?";
 				PreparedStatement pstmt = null;
 				ResultSet rs = null;
 				try {
@@ -137,14 +137,14 @@ public class MemberDao {
 					close(pstmt);
 				}
 							
-				System.out.println("[Member Dao update] return:" + result);
+				System.out.println("[Member Dao login] return:" + result);
 				return result;
 			}
 		
 			
 			//login : mpwd를 return 함. id 존재하지 않으면 return null
 			public String login(Connection conn, String mid) {
-				
+				System.out.println("[Member Dao login] mid :"+mid);
 				String result = null;
 				String query = "select mpwd from member where mid=?";
 				PreparedStatement pstmt = null;
@@ -154,7 +154,7 @@ public class MemberDao {
 					pstmt.setString(1, mid);
 					rs = pstmt.executeQuery();
 					if(rs.next()) {
-						result = rs.getString(query);
+						result = rs.getString("mpwd");
 						}
 					} catch (SQLException e) {
 					e.printStackTrace();
@@ -162,7 +162,7 @@ public class MemberDao {
 					close(pstmt);
 					
 				}
-				System.out.println("[Member Dao update] return:" + result);
+				System.out.println("[Member Dao login2] return:" + result);
 				return result;
 			}
 }

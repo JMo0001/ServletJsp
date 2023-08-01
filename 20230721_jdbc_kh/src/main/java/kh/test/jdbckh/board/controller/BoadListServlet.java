@@ -31,6 +31,15 @@ public class BoadListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("[JMo] 세션 attr");
+		System.out.println(request.getSession().getAttribute("SsLoginId"));
+		System.out.println(request.getAttribute("SsLoginId"));
+		String msg = (String)request.getSession().getAttribute("successFailMsg");
+		if(msg != null && !msg.equals("")) {
+			request.setAttribute("successFailMsg", msg);
+			request.getSession().removeAttribute("successFailMsg");
+		}
+		
 		//1.request.getParameter()
 		//2.service.selectList()
 		List<BoardDto> result = new BoardService().selectList();

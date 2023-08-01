@@ -1,0 +1,9 @@
+@import url('/html/20230619_HTML/resources/css/projectname_layout.csS');
+@import url('/html/20230619_HTML/resources/css/projectname_header.css');
+@import url('/html/20230619_HTML/resources/css/projectname_footer.css');
+
+:root{
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+}

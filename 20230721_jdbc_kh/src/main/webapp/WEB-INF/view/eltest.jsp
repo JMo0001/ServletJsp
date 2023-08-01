@@ -18,6 +18,8 @@
 </head>
 <body>
 
+<%@ include file="/WEB-INF/view/header.jsp" %>
+
 <img alt="contextPath 없으면 경로 맞지 않음." src="/resources/image/logo.svg">
 <img alt ="jpg테스트" src="<%=request.getContextPath() %>/resources/images/flower.jpg">
 <img alt ="png테스트" src="<%=request.getContextPath() %>/resources/images/costco.png">

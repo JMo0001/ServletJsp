@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Error</title>
+<title>ErrorNP</title>
 </head>
 <body>
 Error info : <%=exception.getClass().getName() %>
