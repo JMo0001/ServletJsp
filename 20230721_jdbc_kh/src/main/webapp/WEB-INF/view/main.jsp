@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <link href="${pageContext.request.contextPath }/resources/css/reset.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/projectname.css?after" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/projectname_layout.css" rel="stylesheet">
@@ -7,7 +8,6 @@
 <link href="${pageContext.request.contextPath }/resources/css/projectname_aside.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/projectname_section.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/css/responsive.css" rel="stylesheet">
-<%@ include file ="/WEB-INF/view/aside.jsp" %>
 <%@page errorPage="/WEB-INF/view/error/errorPage.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,13 +28,11 @@ min-width 사용시 작은px 먼저 .. 큰px 작성
 
 </head>
 <body>
-    <%@ include file="/WEB-INF/view/header.jsp" %>
-<jsp:include page="/WEB-INF/view/header.jsp"/>
+<%@ include file ="/WEB-INF/view/aside.jsp" %>
+<%@ include file="/WEB-INF/view/header.jsp" %>
+<%-- <jsp:include page="/WEB-INF/view/header.jsp"/> --%>
 
-<% 
-int a = (int)request.getAttribute("abc");
-request.getContextPath();
-%>
+
 
     <div class="wrap content">
         <div id="content">
