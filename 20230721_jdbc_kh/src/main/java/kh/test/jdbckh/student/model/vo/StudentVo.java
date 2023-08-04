@@ -26,6 +26,25 @@ public class StudentVo {
 	
 	
 	
+	public StudentVo() {
+		super();
+	}
+	
+	public StudentVo(String studentNo, String departmentNo, String studentName, String studentSsn,
+			String studentAddress, String entranceDate, String absenceYn, String coachProfessorNo,
+			String departmentName) {
+		super();
+		this.studentNo = studentNo;
+		this.departmentNo = departmentNo;
+		this.studentName = studentName;
+		this.studentSsn = studentSsn;
+		this.studentAddress = studentAddress;
+		this.entranceDate = entranceDate;
+		this.absenceYn = absenceYn;
+		this.coachProfessorNo = coachProfessorNo;
+		this.departmentName = departmentName;
+	}
+
 	@Override
 	public String toString() {
 		return "StudentVo [studentNo=" + studentNo + ", departmentNo=" + departmentNo + ", studentName=" + studentName

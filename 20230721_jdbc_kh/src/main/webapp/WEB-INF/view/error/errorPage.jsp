@@ -8,9 +8,10 @@
 <title>Error</title>
 </head>
 <body>
-Error info : <%=exception.getClass().getName() %>
+<%-- Error info : <%=exception.getClass().getName() %> --%>
 <hr>
 오류페이지
-<a href ="${pageContext.request.contextPath }">main 가기</a>
+<a href="javascript:window.history.back();">이전페이지로 이동</a>
+<a href ="${pageContext.request.contextPath }/main">main 가기</a>
 </body>
 </html>

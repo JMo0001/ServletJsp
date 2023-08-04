@@ -34,8 +34,14 @@ public class StudentListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("/student/list doGET() 진입");
-		//TODO DB 연동
-		//1. 전달받은 parameter 읽어내기 > 없다
+		//0. msg관련 session
+		if(request.getSession().getAttribute("msg") instanceof String) {
+			String msg = (String)request.getSession().getAttribute("msg");
+			request.getSession().removeAttribute("msg");
+			request.setAttribute("msg", msg);
+		}
+		
+		//1. 전달받은 parameter 읽어내기
 		String searchWord = request.getParameter("searchWord");
 		String pageNoStr = request.getParameter("pageNo");
 		//String --> int

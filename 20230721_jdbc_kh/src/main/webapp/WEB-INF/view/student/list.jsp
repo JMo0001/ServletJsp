@@ -16,8 +16,10 @@
 <head>
 <meta charset="UTF-8">
 <title>학생 리스트</title>
+<jsp:include page="/WEB-INF/view/msg/msg.jsp"></jsp:include>
 </head>
 <body>
+
 	<h2>학생 리스트</h2>
 	<div>
 		<a href="<%=request.getContextPath()%>/student/insert">학생등록</a>

@@ -21,12 +21,12 @@
 </head>
 <body>
 <div>
-[<%= request.getSession().getAttribute("SsLoginId") %>]<hr>
+<%-- [<%= request.getSession().getAttribute("SsLoginId") %>]<hr>
 [<%= session.getAttribute("SsLoginId") %> ]<hr>
 [${SsLoginId } ]<hr>
 [EL 내장객체명 : ${sessionScope.SsLoginId } ]<hr>
 [${successMsg }]<hr>
-[${successFailMsg }]<hr>
+[${successFailMsg }]<hr> --%>
 <script>
 	var msg = "${successFailMsg}"
 	if (msg){

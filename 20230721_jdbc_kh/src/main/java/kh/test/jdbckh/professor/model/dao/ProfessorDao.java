@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
+
+import kh.test.jdbckh.department.model.vo.DepartmentVo;
 import kh.test.jdbckh.professor.model.vo.ProfessorVo;
 
 public class ProfessorDao {
@@ -184,6 +186,38 @@ public class ProfessorDao {
 		}
 		return result;
 	}
+	
+	public List<ProfessorVo> selectListProfessorForStudent(Connection conn) {	//listAll
+		List<ProfessorVo> result = null;
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select "
+				+ " professor_NO, professor_NAME "
+				+ " from tb_professor order by professor_name";
+				
+			try {
+				pstmt = conn.prepareStatement(query);
+				rs=pstmt.executeQuery();
+				
+				result = new ArrayList<ProfessorVo>();
+				while (rs.next()==true) {
+					ProfessorVo vo = new ProfessorVo();
+					vo.setProfessorNo(rs.getString("professor_no"));
+					vo.setProfessorName(rs.getString("professor_name"));
+					
+					result.add(vo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			System.out.println("proFDAO"+result);
+		
+		return result;
+	}	
 	
 	
 	

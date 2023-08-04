@@ -42,6 +42,7 @@ public class StudentDao {
 			close(pstmt);
 		}
 		System.out.println("[student insert dao result ]"+result);
+		System.out.println("departmentNo :  >> "+vo.getDepartmentNo());
 		return result;
 	}
 	

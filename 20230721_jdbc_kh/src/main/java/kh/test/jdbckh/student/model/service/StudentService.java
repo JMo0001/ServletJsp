@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
+
+import kh.test.jdbckh.department.model.vo.DepartmentVo;
+import kh.test.jdbckh.professor.model.vo.ProfessorVo;
 import kh.test.jdbckh.student.model.dao.StudentDao;
 import kh.test.jdbckh.student.model.vo.StudentVo;
 
@@ -75,4 +78,14 @@ public class StudentService {
 		close(conn);
 		return result;
 	}
+	
+//	//추가 > professor로 이동
+//		//학생 등록시 필요한 학과 정보 읽기
+//		public List<ProfessorVo> selectListProfessorForStudent(){
+//			List<DepartmentVo> result = null;
+//			Connection conn =getConnection();
+//			result = dao.selectListProfessorForStudent(conn);
+//			close(conn);
+//			return result;
+//	}
 }

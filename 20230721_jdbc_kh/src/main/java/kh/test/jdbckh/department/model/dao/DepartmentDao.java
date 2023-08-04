@@ -335,4 +335,36 @@ public class DepartmentDao {
 //		return result;
 //	}	
 	
+	
+//	학생 등록시 필요한 학과 정보를 읽기
+	public List<DepartmentVo> selectListForStudent(Connection conn) {	//listAll
+		List<DepartmentVo> result = null;
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = "select "
+				+ " DEPARTMENT_NO, DEPARTMENT_NAME "
+				+ " from tb_department "
+				+ " where open_yn = 'Y'";
+			try {
+				pstmt = conn.prepareStatement(query);
+				rs=pstmt.executeQuery();
+				
+				result = new ArrayList<DepartmentVo>();
+				while (rs.next()==true) {
+					DepartmentVo vo = new DepartmentVo();
+					vo.setDepartmentNo(rs.getString("department_no"));
+					vo.setDepartmentName(rs.getString("department_name"));
+					
+					result.add(vo);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+		
+		return result;
+	}	
 }
