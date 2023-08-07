@@ -1,11 +1,18 @@
 package kh.test.jdbckh.ajax.controlloer;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import kh.test.jdbckh.department.model.service.DepartmentService;
+import kh.test.jdbckh.department.model.vo.DepartmentVo;
 
 /**
  * Servlet implementation class AjaxPageController
@@ -26,6 +33,10 @@ public class AjaxPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<DepartmentVo> deptList = new DepartmentService().selectListForStudent();
+		Gson gson = new Gson();
+		request.setAttribute("deptList", gson.toJson(deptList));
+		
 		request.getRequestDispatcher("/WEB-INF/view/ajaxtest.jsp").forward(request, response);
 	}
 
