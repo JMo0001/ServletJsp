@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import kh.test.jdbckh.board.model.dao.BoardDao;
+import kh.test.jdbckh.board.model.dto.AttachFileDto;
 import kh.test.jdbckh.board.model.dto.BoardDto;
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
 
@@ -26,17 +27,24 @@ private BoardDao dao = new BoardDao();
 		return result;
 	}
 	// 한 행 삽입 - BoardDto 자료형을 받아와야 함.
-	public int insert(BoardDto dto){
+	public int insert(BoardDto dto, List<AttachFileDto> fileList){
 		int result = 0;
 		Connection conn = getConnectionkhl();
 		
 		setAutocommit(conn, false);
+		int nexval = dao.getSeqBoardBnoNexVal(conn);
 		if(dto.getBno()==0) {	//원본글작성
-			result = dao.insert(conn, dto);
+			result = dao.insert(conn, dto, nexval);
+			if(fileList != null && fileList.size()>0) {
+				result = dao.insertAttchiFileList(conn, fileList, nexval);
+			}
 		}else {	//답글작성
 			result = dao.update(conn, dto);
 			if(result>-1) {
-				result = dao.insert(conn, dto);
+				result = dao.insertReply(conn, dto, nexval);
+			}
+			if(fileList != null && fileList.size()>0) {
+				result = dao.insertAttchiFileList(conn, fileList, nexval);
 			}
 		}
 		if(result > 0) {

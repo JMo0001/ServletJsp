@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import kh.test.jdbckh.board.model.dto.AttachFileDto;
 import kh.test.jdbckh.board.model.dto.BoardDto;
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.close;
 
@@ -59,27 +60,20 @@ public class BoardDao {
 		}
 
 		// 한 행 삽입 - BoardDto 자료형을 받아와야 함.
-		public int insert(Connection conn, BoardDto dto) {
-			System.out.println("[Board Dao insert] dto:" + dto);
+		//원본 글 작성
+		public int insert(Connection conn, BoardDto dto, int nextval) {
+			System.out.println("[Board Dao insert] dto:" + dto+", "+nextval);
 			int result = 0;
-			String query = null;
-			if(dto.getBno()==0) {	//원본 글 작성
-				query = "insert into BOARD values(SEQ_BOARD_BNO.nextval, ?, ?, default, ?, SEQ_BOARD_BNO.nextval, 0,0)";
-			}else {
-				query = "insert into BOARD values (SEQ_BOARD_BNO.nextval, ?, ?, default, ?, (select bref from board where bno = ?), (select bre_level+1 from board where bno = ?), (select bre_step+1 from board where bno = ?))";
-			}
+			String query = "";
+			query = "insert into BOARD values(?, ?, ?, default, ?, ?, 0,0)";
 			PreparedStatement pstmt = null;
-			
 			try {
 				pstmt = conn.prepareStatement(query);
-				pstmt.setString(1, dto.getBtitle());
-				pstmt.setString(2, dto.getBcontent());
-				pstmt.setString(3, dto.getMid());
-				if(dto.getBno() != 0) {	//답글
-				pstmt.setInt(4, dto.getBno());
-				pstmt.setInt(5, dto.getBno());
-				pstmt.setInt(6, dto.getBno());
-				}
+				pstmt.setInt(1, nextval);
+				pstmt.setString(2, dto.getBtitle());
+				pstmt.setString(3, dto.getBcontent());
+				pstmt.setString(4, dto.getMid());
+				pstmt.setInt(5, nextval);
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -88,6 +82,30 @@ public class BoardDao {
 			}
 			
 			System.out.println("[Board Dao insert] return:" + result);
+			return result;
+		}
+		//답글 작성
+		public int insertReply(Connection conn, BoardDto dto, int nextval) {
+			int result = 0;
+			String query = "insert into BOARD values (?,?,?,default,?, (select bref from board where bno=?), "
+						+ " (select bre_level+1 from board where bno=?), (select bre_step+1 from board where bno=?))";
+			PreparedStatement pstmt = null;
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, nextval);
+				pstmt.setString(1, dto.getBtitle());
+				pstmt.setString(2, dto.getBcontent());
+				pstmt.setString(3, dto.getMid());
+				pstmt.setInt(4, dto.getBno());
+				pstmt.setInt(5, dto.getBno());
+				pstmt.setInt(6, dto.getBno());
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
 			return result;
 		}
 
@@ -227,4 +245,58 @@ public class BoardDao {
 			System.out.println("[Board Dao selectList] return:" + result);
 			return result;
 		}
+		//첨부파일 저장
+		public int insertAttchiFileList(Connection conn, List<AttachFileDto> dtoList, int bno) {
+			System.out.println("[Board Dao insertAttchiFileList] dto:" + dtoList);
+			int result = 0;
+			String query = "";
+				query = "insert all ";
+			for(int i=0; i<dtoList.size();i++) {
+				query +=" into ATTACHE_FILE(FILEPATH, BNO) values(?, ?) ";
+			}
+			query += " select * from dual ";
+			
+			PreparedStatement pstmt = null;
+			try {
+				pstmt = conn.prepareStatement(query);
+				for (int i=0; i<dtoList.size(); i++) {
+					pstmt.setString(2*i+1, dtoList.get(i).getFilepath());
+					pstmt.setInt((2*i)+2, bno);
+				}
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			System.out.println("[Board Dao insertAttchiFileList] return:" + result);
+			return result;
+		}
+		
+		
+		public int getSeqBoardBnoNexVal(Connection conn) {
+			System.out.println("[Board Dao getSeqBoardBnoNexVal]");
+			int result = 0;
+			String query = "select SEQ_BOARD_BNO.nextval bnonextval from dual";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				pstmt = conn.prepareStatement(query);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					result = rs.getInt("bnonextval");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
+			System.out.println("[Board Dao getSeqBoardBnoNexVal] return:" + result);
+			return result;
+		}
+		
+		
 }

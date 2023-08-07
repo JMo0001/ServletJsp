@@ -48,10 +48,11 @@ public class LoginDoServlet extends HttpServlet {
 			request.getSession().setAttribute("successMsg", "로그인성공" );
 			request.getSession().setAttribute("SsLoginId", mid );
 			sendUrl += "/board/list";
+			System.out.println("LoginDoServlet : "+mid);
 		}else {
 			System.out.println("로그인 실패");
 			request.getSession().setAttribute("failMsg", "로그인에 실패하였습니다.");
-			sendUrl += "/error";
+			sendUrl += "/board/list";
 		}
 		response.sendRedirect(sendUrl);
 	}

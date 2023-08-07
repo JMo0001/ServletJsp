@@ -32,9 +32,19 @@ public class BoardListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Board> result = new BoardService().selectList();
+		String msg = (String)request.getSession().getAttribute("successFailMsg");
+		if(msg != null && !msg.equals("")) {
+			request.setAttribute("successFailMsg", msg);
+			request.getSession().removeAttribute("successFailMsg");
+		}
+			
+		// 1. request.getParameter()
+		// 2. service.selectList();
+		// 3. 
 		request.setAttribute("boardList", result);
-		
+		// 4.
 		request.getRequestDispatcher("/WEB-INF/view/board/list.jsp").forward(request, response);
+		
 	}
 	
 

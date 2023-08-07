@@ -1,5 +1,7 @@
 package kh.test.jdbckh.board.model.dto;
 
+import java.util.List;
+
 public class BoardDto {
 
 //	----------- -------- -------------- 
@@ -19,6 +21,9 @@ public class BoardDto {
 	private int bref;
 	private int breLevel;
 	private int breStep;
+	//1:n관계
+//	private List<String> filepath;
+	private List<AttachFileDto> attachiFileList;
 	
 	public BoardDto() {
 	}
@@ -64,12 +69,15 @@ public class BoardDto {
 		this.bcontent = bcontent;
 		this.mid = mid;
 	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "BoardDto [bno=" + bno + ", btitle=" + btitle + ", bcontent=" + bcontent + ", bwriteDate=" + bwriteDate
-				+ ", mid=" + mid + ", bref=" + bref + ", breLevel=" + breLevel + ", breStep=" + breStep + "]";
+				+ ", mid=" + mid + ", bref=" + bref + ", breLevel=" + breLevel + ", breStep=" + breStep
+				+ ", attachiFileList=" + attachiFileList + "]";
 	}
-	
 	public int getBno() {
 		return bno;
 	}
@@ -117,6 +125,12 @@ public class BoardDto {
 	}
 	public void setBreStep(int breStep) {
 		this.breStep = breStep;
+	}
+	public List<AttachFileDto> getAttachiFileList() {
+		return attachiFileList;
+	}
+	public void setAttachiFileList(List<AttachFileDto> attachiFileList) {
+		this.attachiFileList = attachiFileList;
 	}
 	
 	
