@@ -21,10 +21,108 @@
 <div class="grid-wrap">
 	<div>학과번호</div><div>학과이름</div>
 </div>
+<div>
+	<h2>로그인</h2>
+	<form id="frm-login">
+		id : <input type="text" name = "mid" required="required">
+		pw : <input type="password" name = "mpwd" required="required">
+		<button type="button" id ="btnajax3">로그인</button>	
+	</form>
+</div>
+<div>
+	<h2>여러회원가입(장바구니선택)</h2>
+	<div class = "singup">
+		id : <input type="text" name = "mid" required="required"><br>
+		pw : <input type="password" name = "mpwd" required="required"><br>
+		이름 : <input type="text" name = "mname" required="required"><br>
+		이메일 : <input type="text" name = "memail" required="required"><br>
+	</div>
+	<div class = "singup">
+		id : <input type="text" name = "mid" required="required"><br>
+		pw : <input type="password" name = "mpwd" required="required"><br>
+		이름 : <input type="text" name = "mname" required="required"><br>
+		이메일 : <input type="text" name = "memail" required="required"><br>
+	</div>
+	<div class = "singup">
+		id : <input type="text" name = "mid" required="required"><br>
+		pw : <input type="password" name = "mpwd" required="required"><br>
+		이름 : <input type="text" name = "mname" required="required"><br>
+		이메일 : <input type="text" name = "memail" required="required"><br>
+	</div>
+		
+	<button type="button" id ="btnajax4">회원가입 TODO</button>	
+</div>
 	
 <script>
 $("#btnajax1").click(ajax1ClickHandler);
 $("#btnajax2").click(ajax2ClickHandler);
+$("#btnajax3").click(ajax3ClickHandler);
+$("#btnajax4").click(ajax4ClickHandler);
+
+function ajax4ClickHandler(){
+	var dataArr = [];	// << js array - json 따옴표
+	$(".singup").each(function(idx){
+		var dataObj = {
+			mid:$(this)/* .child() */.find("[name=mid]").val()
+			, mpwd:$(this).find("[name=mpwd]").val()
+			, mname:$(this).find("[name=mname]").val()
+			, memail:$(this).find("[name=memail]").val()
+		};	
+		
+		dataArr.push(dataObj);
+	});
+	console.log(dataArr);
+	console.log(JSON.stringify(dataArr));	// json 으로 변형되면서 String 형태. 자료형 String
+	
+	$.ajax({
+		url:"${pageContext.request.contextPath}/ajax4"
+		, type:"post"
+		, data: JSON.stringify(dataArr)
+			/* dataQuery << 변수에 담기보다 위에처럼 씀.*/
+			/* {
+				mid:$("[name=mid]").val(),
+				mpwd:$("[name=mpwd]").val()
+				} */
+		,success:function(result){
+			console.log("success:")
+			console.log(result)
+		}
+		,error:function(){
+			console.log("error:")
+			console.log(result)
+			
+		}
+	});
+}
+
+
+
+function ajax3ClickHandler(){
+	console.log("ajax3ClickHandler");
+	/* form엘리먼트객체.serialize() */
+	/* var dataQuery = $("#frm-login").serialize();
+	console.log(dataQuery); */
+	$.ajax({
+		url:"${pageContext.request.contextPath}/ajax3"
+		, type:"post"
+		, data: $("#frm-login").serialize()
+			/* dataQuery << 변수에 담기보다 위에처럼 씀.*/
+			/* {
+				mid:$("[name=mid]").val(),
+				mpwd:$("[name=mpwd]").val()
+				} */
+		,success:function(result){
+			console.log("success:")
+			console.log(result)
+		}
+		,error:function(){
+			console.log("error:")
+			console.log(result)
+			
+		}
+	});
+	
+}
 
 function ajaxSuccess(result){
 	console.log("controller로부터 데이터 전달받음.-3");
@@ -57,7 +155,7 @@ function ajax1ClickHandler(){
 			console.log("controller로부터 데이터 전달받음.-3");
 			console.log(result);
 			}//보통 result 말고 data로 줌. */ //위쪽에 함수로 뺴버림 success : function
-		, success : ajaxSuccess
+		, success : ajaxSuccess	
 		
 		});
 	console.log("ajax로 데이터 전달 중-1");
