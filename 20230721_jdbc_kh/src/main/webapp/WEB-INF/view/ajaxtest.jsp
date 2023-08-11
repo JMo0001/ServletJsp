@@ -176,8 +176,8 @@ function displayDepartment(deptList){
 	for(var i=0; i<deptList.length;i++){
 		var dvo = deptList[i];
 		
-	htmlVal +="<div>"+dvo.departmentName+"</div>";
 	htmlVal += "<div>"+dvo.departmentNo+"</div>";
+	htmlVal +="<div>"+dvo.departmentName+"</div>";
 	
 	}
 	$('.grid-wrap').html(htmlVal);

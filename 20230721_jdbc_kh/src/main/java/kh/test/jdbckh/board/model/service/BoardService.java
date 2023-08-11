@@ -23,6 +23,11 @@ private BoardDao dao = new BoardDao();
 		BoardDto result = null;
 		Connection conn = getConnectionkhl();
 		result = dao.selectOne(conn, bno);
+		if(result != null) {
+			//첨부파일 읽어서 result에 넣기
+			List<AttachFileDto> fileList = dao.selectAttachFileList(conn, bno);
+			result.setAttachiFileList(fileList);
+		}
 		close(conn);
 		return result;
 	}

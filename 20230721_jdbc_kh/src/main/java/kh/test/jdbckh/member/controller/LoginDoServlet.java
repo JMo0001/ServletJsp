@@ -43,7 +43,9 @@ public class LoginDoServlet extends HttpServlet {
 		Member vo = new Member(mid, mpwd); 
 		String result = new MemberService().login(mid);
 		String sendUrl = request.getContextPath();
-		if(mpwd.equals(result)) {
+		if (mpwd == null) {
+			//아이디가 존재하지 않습니다.
+		}else if(mpwd.equals(result)) {
 			System.out.println("로그인 성공");
 			request.getSession().setAttribute("successMsg", "로그인성공" );
 			request.getSession().setAttribute("SsLoginId", mid );

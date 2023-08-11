@@ -52,21 +52,23 @@
 		<div>작성자</div>
 		<div>작성일</div>
 		<div>옵션</div>
-<%
-List<BoardDto> boardList = (List<BoardDto>)request.getAttribute("boardList");
-if(boardList != null && boardList.size()>0){
-	for(int i=0; i<boardList.size(); i++){
-		BoardDto vo = boardList.get(i);
-%>
-		<div><%=vo.getBno() %></div>
-		<div><%=vo.getBtitle() %></div>
-		<div><%=vo.getMid() %></div>
-		<div><%=vo.getBwriteDate() %></div>
-		<div><a href="<%=request.getContextPath() %>/board/insert?bno=<%=vo.getBno() %>" >답글</a></div>
-<%
-	}
-}
-%>
+<c:if test="${not empty boardList }">
+	<c:forEach items="${boardList }" var="vo">
+		<div>${vo.bno }</div>
+		<div>
+			<a href="<%=request.getContextPath()%>/board/read?bno=${vo.bno }">
+			<c:forEach begin="1" end="${vo.breLevel }">&#8618;</c:forEach>
+			${vo.btitle }
+			</a>
+		</div>
+			<div>${vo.mid }</div>
+			<div>${vo.bwriteDate }</div>
+			<div><a href="<%=request.getContextPath() %>/board/insert?bno=${vo.bno}" >답글</a></div>
+	</c:forEach>
+	
+</c:if>
+		
+
 	</div>
 </body>
 </html>

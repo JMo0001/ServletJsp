@@ -54,7 +54,36 @@ public class BoardDao {
 		public BoardDto selectOne(Connection conn, int bno) {
 			System.out.println("[Board Dao selectOne] bno:" + bno);
 			BoardDto result = null;
-			// TODO
+			String query = "select BNO, BTITLE, bcontent, to_char(BWRITE_DATE, 'yyyy-mm-dd hh24:mi:ss') BWRITE_DATE, MID, BREF, BRE_LEVEL, BRE_STEP from BOARD ";
+			query += " where bno=?"	;
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, bno);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					result = new BoardDto(
+							rs.getInt("bno"),
+							rs.getString("btitle"),
+							rs.getString("bcontent"),
+							rs.getString("bwrite_date"),
+							rs.getString("mid"),
+							rs.getInt("bref"),
+							rs.getInt("bre_level"),
+							rs.getInt("bre_step")
+							);
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			
 			System.out.println("[Board Dao selectOne] return:" + result);
 			return result;
 		}
@@ -94,12 +123,12 @@ public class BoardDao {
 			try {
 				pstmt = conn.prepareStatement(query);
 				pstmt.setInt(1, nextval);
-				pstmt.setString(1, dto.getBtitle());
-				pstmt.setString(2, dto.getBcontent());
-				pstmt.setString(3, dto.getMid());
-				pstmt.setInt(4, dto.getBno());
+				pstmt.setString(2, dto.getBtitle());
+				pstmt.setString(3, dto.getBcontent());
+				pstmt.setString(4, dto.getMid());
 				pstmt.setInt(5, dto.getBno());
 				pstmt.setInt(6, dto.getBno());
+				pstmt.setInt(7, dto.getBno());
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -298,5 +327,24 @@ public class BoardDao {
 			return result;
 		}
 		
+		public List<AttachFileDto> selectAttachFileList(Connection conn, int bno){
+			List<AttachFileDto> result = new ArrayList<AttachFileDto>();
+			String query = " select filepath from Attache_File ";
+			query += " where BNO=?";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, bno);
+				rs = pstmt.executeQuery();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			return result;
+		}
 		
 }
