@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dept1">
+  
+  <resultMap type="DepartmentDto" id="resultMapDept">
+  	<id property="departmentNo" column="DEPARTMENT_NO"/>
+  	<result property="departmentName" column="DEPARTMENT_NAME"/>
+  	<result property="category" column="CATEGORY"/>
+  	<result property="openYn" column="OPEN_YN"/>
+  	<result property="capacity" column="CAPACITY"/>
+  </resultMap>
+  
+  <select id="selectList" resultMap="resultMapDept">
+  	select DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY, OPEN_YN, CAPACITY
+  	from tb_department
+  </select>
+</mapper>
