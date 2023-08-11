@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h2>mybatis메인페이지</h2>
+	
+[ ${stdList } ]
 </body>
 </html>
