@@ -4,7 +4,7 @@
 	
 	<settings>
 	<!-- 대소문자 구분하니 주의 -->
-	<!-- null 값 처리 -->
+	<!-- null 값 처리 >> "NULL" << 소문자 아님 주의-->
 	<setting name="jdbcTypeForNull" value="NULL"/>
 		<!--   _를 카멜기법으로
 		<setting name="mapUnderscoreToCamelCase" value="true"/> 
@@ -14,6 +14,7 @@
 	<typeAliases>
 		<typeAlias type="kh.test.mybatis.department.model.vo.DepartmentVo" alias="DepartmentVo2"/>
 		<typeAlias type="kh.test.mybatis.student.model.vo.StudentVo" alias="studentVo2"/>
+		<typeAlias type="kh.test.jdbckh.board.model.dto.BoardDto" alias="boardDto"/>
 	</typeAliases>
 	
 	<environments default="development1">

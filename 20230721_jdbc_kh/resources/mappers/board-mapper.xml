@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper1">
+
+<resultMap type="BoardDto" id="BoardMap1">
+	<id property="bno" column="bno"/>	
+	<result property="btitle" column="btitle"/>
+	<result property="bcontent" column="bcontent"/>
+	<result property="bwriteDate" column="bwriteDate"/>
+	
+	<collection property="AttachFileDto">
+		<result property="filepath" column="filepath"/>
+	</collection>
+</resultMap>
+
+	<select id="selectAttachFile" resultType="AttachFileDto">
+		select * from Attach_File
+	</select>
+	<select id="selectOne" resultMap="BoardMap1" parameterType="_int"><!-- mybatis 자료형 _int -->
+		select BNO, BTITLE, bcontent, to_char(BWRITE_DATE, 'yyyy-mm-dd hh24:mi:ss') BWRITE_DATE,
+		MID, BREF, BRE_LEVEL, BRE_STEP from BOARD
+		where bno=#{bno}  <!-- 가독성 측면에서 bno라고 넣어 준다. 1개라면>> #{ㅁㅁ} 다른 이름 쓸수는 있음 -->
+	</select>
+	<select id="insert" parameterType="map"><!-- mybatis 자료형 map -->
+		insert into BOARD values(#{}, #{}, #{}, default, #{}, #{}, 0,0)
+	</select>
+</mapper>

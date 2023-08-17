@@ -3,9 +3,13 @@ package kh.test.jdbckh.board.model.service;
 import java.sql.Connection;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import kh.test.jdbckh.board.model.dao.BoardDao;
 import kh.test.jdbckh.board.model.dto.AttachFileDto;
 import kh.test.jdbckh.board.model.dto.BoardDto;
+import kh.test.mybatis.common.jdbc.MyBatisTemplate;
+
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.*;
 
 public class BoardService {
@@ -13,22 +17,22 @@ private BoardDao dao = new BoardDao();
 	
 	public List<BoardDto> selectList(){
 		List<BoardDto> result = null;
-		Connection conn = getConnectionkhl();
-		result = dao.selectList(conn);
-		close(conn);
+		SqlSession session = MyBatisTemplate.getSqlSession(true);
+//		result = dao.selectList(session);
+		session.close();
 		return result;
 	}
 	// 한 행 읽기 - PK로where조건
 	public BoardDto selectOne(int bno){
 		BoardDto result = null;
-		Connection conn = getConnectionkhl();
-		result = dao.selectOne(conn, bno);
+		SqlSession session = MyBatisTemplate.getSqlSession(true);
+		result = dao.selectOne(session, bno);
 		if(result != null) {
 			//첨부파일 읽어서 result에 넣기
-			List<AttachFileDto> fileList = dao.selectAttachFileList(conn, bno);
+			List<AttachFileDto> fileList = dao.selectAttachFileList(session, bno);
 			result.setAttachiFileList(fileList);
 		}
-		close(conn);
+		session.close();
 		return result;
 	}
 	// 한 행 삽입 - BoardDto 자료형을 받아와야 함.

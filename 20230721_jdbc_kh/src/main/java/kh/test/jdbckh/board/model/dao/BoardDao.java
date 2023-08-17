@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import kh.test.jdbckh.board.model.dto.AttachFileDto;
 import kh.test.jdbckh.board.model.dto.BoardDto;
 import static kh.test.jdbckh.common.jdbc.JdbcTemplate.close;
@@ -51,7 +53,7 @@ public class BoardDao {
 		}
 
 		// 한 행 읽기 - PK로where조건
-		public BoardDto selectOne(Connection conn, int bno) {
+		public BoardDto selectOne(SqlSession session, int bno) {
 			System.out.println("[Board Dao selectOne] bno:" + bno);
 			BoardDto result = null;
 			String query = "select BNO, BTITLE, bcontent, to_char(BWRITE_DATE, 'yyyy-mm-dd hh24:mi:ss') BWRITE_DATE, MID, BREF, BRE_LEVEL, BRE_STEP from BOARD ";
@@ -60,7 +62,7 @@ public class BoardDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try {
-				pstmt = conn.prepareStatement(query);
+//				pstmt = conn.prepareStatement(query);
 				pstmt.setInt(1, bno);
 				rs = pstmt.executeQuery();
 				
@@ -327,7 +329,7 @@ public class BoardDao {
 			return result;
 		}
 		
-		public List<AttachFileDto> selectAttachFileList(Connection conn, int bno){
+		public List<AttachFileDto> selectAttachFileList(SqlSession session, int bno){
 			List<AttachFileDto> result = new ArrayList<AttachFileDto>();
 			String query = " select filepath from Attache_File ";
 			query += " where BNO=?";
@@ -335,7 +337,7 @@ public class BoardDao {
 			ResultSet rs = null;
 			
 			try {
-				pstmt = conn.prepareStatement(query);
+//				pstmt = session.prepareStatement(query);
 				pstmt.setInt(1, bno);
 				rs = pstmt.executeQuery();
 			} catch (SQLException e) {

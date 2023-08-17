@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="board1">
 
-	<resultMap type="DepartmentVo2" id="resultMapDept3">
+	<resultMap type="boardDto" id="resultMapDept3">
 	<!-- id는 주로 PK 컬럼을 작성. 그외 result에 작성 -->
 		<id property="departmentNo" column="DEPARTMENT_NO"/>
 		<result property="departmentName" column="DEPARTMENT_NAME"/>
