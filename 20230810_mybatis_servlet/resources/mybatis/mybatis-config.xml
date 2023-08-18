@@ -14,7 +14,7 @@
 	<typeAliases>
 		<typeAlias type="kh.test.mybatis.department.model.vo.DepartmentVo" alias="DepartmentVo2"/>
 		<typeAlias type="kh.test.mybatis.student.model.vo.StudentVo" alias="studentVo2"/>
-		<typeAlias type="kh.test.jdbckh.board.model.dto.BoardDto" alias="boardDto"/>
+		<!-- <typeAlias type="kh.test.jdbckh.board.model.dto.BoardDto" alias="boardDto"/> -->
 	</typeAliases>
 	
 	<environments default="development1">
